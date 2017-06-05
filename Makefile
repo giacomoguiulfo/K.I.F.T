@@ -6,7 +6,7 @@
 #    By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/16 07:02:04 by gguiulfo          #+#    #+#              #
-#    Updated: 2017/06/05 09:53:01 by gguiulfo         ###   ########.fr        #
+#    Updated: 2017/06/05 10:04:03 by gguiulfo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,12 +51,10 @@ $(NAME): $(OBJ)
 
 clean:
 	@rm -rf $(OBJDIR)
-	@make -C libft clean
 	@printf "\e[32mRemoved Object Files\e[0m\n"
 
 fclean: clean
 	@rm -rf $(NAME)
-	@make -C libft fclean
 	@printf "\e[32mRemoved Executable\e[0m\n"
 
 re: fclean all
