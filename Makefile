@@ -6,17 +6,19 @@
 #    By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/16 07:02:04 by gguiulfo          #+#    #+#              #
-#    Updated: 2017/06/05 10:04:03 by gguiulfo         ###   ########.fr        #
+#*   Updated: 2017/06/06 02:07:59 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
-NAME	:=
+NAME	:= kift
 
 CC 		:= gcc
-CFLAGS	+= -Wall -Wextra -Werror
+#CFLAGS	+= -Wall -Wextra -Werror
 CFLAGS	+= -I includes -I libft/includes
+CFLAGS	+= `pkg-config --cflags pocketsphinx sphinxbase` -DMODELDIR=\"`pkg-config --variable=modeldir pocketsphinx`\"
+LDFLAGS += `pkg-config --libs pocketsphinx sphinxbase`
 
-FILES	:=
+FILES	:= kift_main
 
 OBJDIR	:= obj/
 SRCDIR	:= src/
@@ -38,7 +40,7 @@ obj:
 
 $(OBJDIR)%.o:$(SRCDIR)%.c
 	@printf "\e[32mCompiling...(%d/%d)\e[0m\n" $(COUNTER) $(MAX)
-	@$(CC) $(CFLAGS) -o $@ -c $<
+	@$(CC) $(CFLAGS) $(LDFLAG) -o $@ -c $<
 
 libft: $(LIBFT)
 
