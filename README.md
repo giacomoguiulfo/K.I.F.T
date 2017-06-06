@@ -10,5 +10,5 @@ make
 
 ## DEPENDENCIES
 ```
-brew install sphinxbase pocketsphinx sdl
+brew install swig sdl sphinxbase pocketsphinx
 ```
