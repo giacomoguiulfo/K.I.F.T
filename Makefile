@@ -6,7 +6,7 @@
 #    By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/16 07:02:04 by gguiulfo          #+#    #+#              #
-#*   Updated: 2017/06/06 06:07:22 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/06/06 06:15:44 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ LDFLAGS		+= `sdl-config --libs`
 
 OBJDIR		:= obj
 SRCDIR		:= src
-SAMDIR		:= src/sam/src
+SAMDIR		:= src/sam
 OBJEXT		:= o
 SRCEXT		:= c
 
@@ -32,11 +32,11 @@ LIBFT		:= libft/libft.a
 
 KIFTFILES	:= kift_main
 SAMFILES	:= reciter sam render output debug processframes createtransitions
+
 SRC			:= $(addprefix $(SRCDIR)/, $(addsuffix .$(SRCEXT), $(KIFTFILES))) \
 				$(addprefix $(SAMDIR)/, $(addsuffix .$(SRCEXT), $(SAMFILES)))
 
 OBJ			:= $(patsubst $(SRCDIR)/%, $(OBJDIR)/%, $(SRC:.$(SRCEXT)=.$(OBJEXT))) \
-
 
 MAX			:=	$(words $(OBJ))
 n			:=	x
