@@ -4,3 +4,6 @@
 [submodule "SAM"]
 	path = SAM
 	url = https://github.com/s-macke/SAM.git
+[submodule "sphinxbase"]
+	path = sphinxbase
+	url = https://github.com/cmusphinx/sphinxbase.git
