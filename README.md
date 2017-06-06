@@ -1,4 +1,4 @@
-# 42-kift
+# KIFT
 The future of voice commands and super cool robot assistants
 
 ## GETTING STARTED
