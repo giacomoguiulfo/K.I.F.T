@@ -6,11 +6,13 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 01:50:55 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/06 01:53:37 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/06 03:30:20 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef KIFT_H
 # define KIFT_H
+# include <libft.h>
+# include <pocketsphinx.h>
 
 #endif

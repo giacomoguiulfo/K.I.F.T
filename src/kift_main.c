@@ -6,11 +6,11 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 01:50:16 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/06 02:01:51 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/06 03:31:25 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pocketsphinx.h>
+#include <kift.h>
 
 int		main(int argc, char **argv)
 {
@@ -28,25 +28,13 @@ int		main(int argc, char **argv)
 			"-dict", MODELDIR "/en-us/cmudict-en-us.dict",
 			NULL);
 
-	if (config == NULL)
-	{
-		fprintf(stderr, "Failed to create config object, see log for  details\n");
-		return (-1);
-	}
+	CHECK(config == NULL, RETURN(-1), "Failed to create config object, see log for  details");
 
 	ps = ps_init(config);
-	if (ps == NULL)
-	{
-		fprintf(stderr, "Failed to create recognizer, see log for  details\n");
-		return (-1);
-	}
+	CHECK(ps == NULL, RETURN(-1), "Failed to create recognizer, see log for  details");
 
 	fh = fopen("goforward.raw", "rb");
-	if (fh == NULL)
-	{
-		fprintf(stderr, "Unable to open input file goforward.raw\n");
-		return (-1);
-	}
+	CHECK(fh == NULL, RETURN(-1), "Unable to open input file goforward.raw");
 
 	rv = ps_start_utt(ps);
 
