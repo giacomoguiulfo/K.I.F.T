@@ -13,5 +13,6 @@ make
 brew tap watsonbox/cmu-sphinx
 brew install --HEAD watsonbox/cmu-sphinx/cmu-sphinxbase
 brew install --HEAD watsonbox/cmu-sphinx/cmu-pocketsphinx
+brew install --HEAD watsonbox/cmu-sphinx/cmu-sphinxtrain (only needed for training)
 brew install swig sdl
 ```
