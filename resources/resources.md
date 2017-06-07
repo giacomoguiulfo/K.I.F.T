@@ -1,9 +1,12 @@
-# Ideas:
+# Ideas
 
-#### Invert colors
-`osascript -e "tell application \"System Events\"" -e "key code 28 using {control down, option down, command down}" -e "end tell"`
+| Usage         | Code                                                                                                                               |
+|---------------|------------------------------------------------------------------------------------------------------------------------------------|
+| Invert colors | `osascript -e "tell application \"System Events\"" -e "key code 28 using {control down, option down, command down}" -e "end tell"` |
+| Dim screen    | `osascript -e "tell application \"System Events\"" -e "repeat 16 times" -e "key code 145" -e "end repeat" -e "end tell"`           |
+| Undim screen  | `osascript -e "tell application \"System Events\"" -e "repeat 16 times" -e "key code 144" -e "end repeat" -e "end tell"`           |
 
-# Useful Links:
+# Useful Links
 
 - Install pocketphoenix:
   - http://www.moreiscode.com/getting-started-with-cmu-sphinx-on-mac-os-x/
