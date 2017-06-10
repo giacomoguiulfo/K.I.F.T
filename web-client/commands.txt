@@ -1,0 +1,5 @@
+npm install -g browser-sync
+browser-sync start --server --directory --files "**/**" &
+
+
+https://github.com/cwilso/volume-meter/

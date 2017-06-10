@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="161.83829mm"
+   height="136.46719mm"
+   viewBox="0 0 161.83829 136.46719"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.1 r"
+   sodipodi:docname="logo.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="-410.44794"
+     inkscape:cy="123.37857"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="0"
+     inkscape:window-y="29"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-26.645304,-45.010058)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:41.59182739px;line-height:1.25;font-family:'DCC - Marker latino';-inkscape-font-specification:'DCC - Marker latino';letter-spacing:0px;word-spacing:0px;fill:#803300;fill-opacity:1;stroke:none;stroke-width:1.03979564"
+       x="25.910515"
+       y="172.8148"
+       id="text4487"
+       inkscape:export-xdpi="399.8775"
+       inkscape:export-ydpi="399.8775"><tspan
+         sodipodi:role="line"
+         id="tspan4485"
+         x="25.910515"
+         y="172.8148"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'DCC - Marker latino';-inkscape-font-specification:'DCC - Marker latino';fill:#803300;stroke-width:1.03979564">patacones</tspan></text>
+    <path
+       sodipodi:type="star"
+       style="fill:#ffd42a;fill-opacity:1;stroke:#803300;stroke-width:2.70700002;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path4512"
+       sodipodi:sides="13"
+       sodipodi:cx="103.43715"
+       sodipodi:cy="89.803314"
+       sodipodi:r1="43.418465"
+       sodipodi:r2="21.709232"
+       sodipodi:arg1="1.2998495"
+       sodipodi:arg2="1.5415105"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 115.05783,131.63778 94.285307,132.2463 75.609358,123.13164 63.30842,106.38186 60.20049,85.834136 66.997558,66.195704 82.142497,51.965491 l 20.023283,-5.562024 20.31455,4.380359 15.95198,13.319252 7.93501,19.206867 -1.89978,20.694425 -11.29934,17.44113 z"
+       inkscape:transform-center-x="-3.5909762"
+       inkscape:transform-center-y="0.57961212"
+       inkscape:export-xdpi="399.8775"
+       inkscape:export-ydpi="399.8775" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:82.64098358px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#803300;fill-opacity:1;stroke:none;stroke-width:2.06602454"
+       x="90.953178"
+       y="103.58759"
+       id="text4491"
+       inkscape:export-xdpi="399.8775"
+       inkscape:export-ydpi="399.8775"><tspan
+         sodipodi:role="line"
+         id="tspan4489"
+         x="90.953178"
+         y="103.58759"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'DCC - Marker latino';-inkscape-font-specification:'DCC - Marker latino';fill:#803300;stroke-width:2.06602454">p</tspan></text>
+  </g>
+</svg>
