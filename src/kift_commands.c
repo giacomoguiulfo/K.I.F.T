@@ -1,23 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   commands.c                                         :+:      :+:    :+:   */
+/*   kift_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/11 02:21:22 by jaleman           #+#    #+#             */
-/*   Updated: 2017/06/11 02:21:23 by jaleman          ###   ########.fr       */
+/*   Updated: 2017/06/11 04:38:02 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// TODO : Put all the includes and defines into its own "kift.h"
-// Use ft_strequ instead of strcmp for code readability?
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <kift.h>
 #define ERROR	(-1)
-
 
 /*
 ** This function do one of the following:
@@ -62,10 +56,10 @@ static int	control_display(char *cmd)
 		ret = system("osascript -e 'tell application \"System Events\"' \
 		-e 'key code 28 using {control down, option down, command down}' \
 		-e 'end tell'");
-	else if (!strcmp(cmd, "turn lights on") || !strcmp(cmd, "undim the screen"))
+	else if (!strcmp(cmd, "lights on") || !strcmp(cmd, "undim the screen"))
 		ret = system("osascript -e 'tell application \"System Events\"' \
 		-e 'repeat 16 times' -e 'key code 144' -e 'end repeat' -e 'end tell'");
-	else if (!strcmp(cmd, "turn lights off") || !strcmp(cmd, "dim the screen"))
+	else if (!strcmp(cmd, "lights off") || !strcmp(cmd, "dim the screen"))
 		ret = system("osascript -e 'tell application \"System Events\"' \
 		-e 'repeat 16 times' -e 'key code 145' -e 'end repeat' -e 'end tell'");
 	ret = 0;
@@ -100,7 +94,7 @@ static int	control_screenshot(char *cmd)
 {
 	int		ret;
 
-	if (!strcmp(cmd, "take a screenshot"))
+	if (!strcmp(cmd, "screenshot"))
 		ret = system("screencapture ~/Desktop/$(date +%Y%m%d%H%M%S).png");
 	else if (!strcmp(cmd, "take a section"))
 		ret = system("screencapture -i ~/Desktop/$(date +%Y%m%d%H%M%S).png");
@@ -108,6 +102,18 @@ static int	control_screenshot(char *cmd)
 	return (ret);
 }
 
+static int	control_say(char *cmd)
+{
+	int		ret;
+	char	*tmp;
+	if ((tmp = strstr(cmd, "say")))
+	{
+		tmp += 3;
+		ret = say(tmp);
+	}
+	ret = 0;
+	return (ret);
+}
 /*
 ** This function is from my libft, it uses ft_putendl instead of printf.
 */
@@ -131,5 +137,7 @@ void		run_commands(char *cmd)
 	if (control_sound(cmd) == ERROR)
 		ft_puterror("Something went wrong!", -1);
 	if (control_screenshot(cmd) == ERROR)
+		ft_puterror("Something went wrong!", -1);
+	if (control_say(cmd) == ERROR)
 		ft_puterror("Something went wrong!", -1);
 }
