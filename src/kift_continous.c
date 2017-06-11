@@ -51,6 +51,7 @@
  *   - Uses audio library; can be replaced with an equivalent custom library.
  */
 
+#include <kift.h>
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
@@ -266,6 +267,7 @@ recognize_from_microphone()
 			hyp = ps_get_hyp(ps, NULL );
 			if (hyp != NULL) {
 				printf("%s\n", hyp);
+				run_commands(strdup(hyp));
 				fflush(stdout);
 			}
 
