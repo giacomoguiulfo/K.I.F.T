@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 01:50:16 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/06 05:35:47 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/11 03:45:47 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,8 @@ int		say(char *input)
 	return (0);
 }
 
+/**
+
 int		main(int argc, char **argv)
 {
 	ps_decoder_t *ps;
@@ -143,7 +145,6 @@ int		main(int argc, char **argv)
 			NULL);
 
 	CHECK(config == NULL, RETURN(-1), "Failed to create config object, see log for  details");
-
 	ps = ps_init(config);
 	CHECK(ps == NULL, RETURN(-1), "Failed to create recognizer, see log for  details");
 
@@ -162,9 +163,12 @@ int		main(int argc, char **argv)
 	rv = ps_end_utt(ps);
 	hyp = ps_get_hyp(ps, &score);
 	printf("Recognized: %s\n", hyp);
-	say(strdup(hyp));
-	fclose(fh);
+
+	recognize_from_microphone();
+//	say(strdup(hyp));
+//	fclose(fh);
 	ps_free(ps);
 	cmd_ln_free_r(config);
 	return 0;
 }
+**/
