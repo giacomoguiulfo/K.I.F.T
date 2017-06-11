@@ -16,4 +16,6 @@
   - http://www.speech.cs.cmu.edu/tools/lmtool-new.html
 - NodeJS Binding
   - https://github.com/mmende/pocketsphinx
- 
+ - Javascript Sphinx
+  - https://syl22-00.github.io/pocketsphinx.js/
+  
