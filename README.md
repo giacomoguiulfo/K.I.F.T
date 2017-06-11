@@ -5,7 +5,7 @@ The future of voice commands and super cool robot assistants
 ```
 git clone --recursive https://github.com/giacomoguiulfo/42-kift.git
 make
-./kift goforward.raw
+./kift -inmic yes
 ```
 
 ## DEPENDENCIES
