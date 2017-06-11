@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 01:50:55 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/11 04:16:35 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/11 04:32:21 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@
 #  include <SDL_audio.h>
 # endif
 void		run_commands(char *cmd);
+int			say(char *input);
 #endif
