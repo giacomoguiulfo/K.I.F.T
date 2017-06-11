@@ -19,6 +19,7 @@
 **   - Search
 **   - Hide hidden files
 **   - Show hidden files
+**   - Sleep
 */
 
 static int	control_finder(char *cmd)
@@ -37,6 +38,11 @@ static int	control_finder(char *cmd)
 	else if (!strcmp(cmd, "show hidden files"))
 		ret = system("defaults write com.apple.finder AppleShowAllFiles YES \
 		&& killall Finder '/System/Library/CoreServices/Finder.app'");
+	else if (!strcmp(cmd, "show hidden files"))
+		ret = system("defaults write com.apple.finder AppleShowAllFiles YES \
+		&& killall Finder '/System/Library/CoreServices/Finder.app'");
+	else if (!strcmp(cmd, "go to sleep"))
+		ret = system("osascript -e 'tell application \"Finder\" to sleep'");
 	ret = 0;
 	return (ret);
 }
