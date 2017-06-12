@@ -5,96 +5,70 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/11 18:00:39 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/12 00:51:20 by jkalia           ###   ########.fr       */
+/*   Created: 2017/06/12 00:57:46 by jkalia            #+#    #+#             */
+/*   Updated: 2017/06/12 01:43:02 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include <netdb.h>
+#include <string.h>
 #include <fcntl.h>
+#include <sys/types.h>
+#include <sys/uio.h>
 #include <unistd.h>
 
-void set_socket(struct sockaddr_in *socket, int type, int host_short)
-{
-	socket -> sin_family = type;
-	socket -> sin_port = htons(host_short);
-}
-
-void deserialize(char *buffer, int *size, char *data)
-{
-	int i=0, j=0;
-	char temp1[20];
-
-	while(buffer[i] != ' ')
-	{
-		temp1[j++] = buffer[i++];
-	}
-	temp1[j] = '\0';
-	printf("\nINT : %s\n", temp1);
-	*size = atoi(temp1);
-
-	i++;
-	j=0;
-
-	while(buffer[i] != '\0')
-	{
-		data[j++] = buffer[i++];
-	}
-	data[j++] = '\0';
-}
+#define BUFFER 1024
 
 int main()
 {
-	int sid = 0, bid = 0, con = 0;
-	char *send_data = (char *)malloc(1024*sizeof(char));
-	char *receive_data = (char *)malloc(1024*sizeof(char));
-	char *temp = (char *)malloc(1024*sizeof(char));
-	struct hostent *host;
-	struct sockaddr_in server_socket;
-	int size = sizeof(server_socket);
+	int				count;
+	int				clientSocket;
+	int				fd;
+	int				file_size;
+	char			buffer[BUFFER];
+	char			temp[BUFFER];
+	struct			sockaddr_in serverAddr;
+	socklen_t		addr_size;
+	struct stat		stat;
 
-	if((sid = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1)
+	/*---- Create the socket. The three arguments are: ----*/
+	/* 1) Internet domain 2) Stream socket 3) Default protocol (TCP in this case) */
+	clientSocket = socket(PF_INET, SOCK_STREAM, 0);
+
+	/*---- Configure settings of the server address struct ----*/
+	/* Address family = Internet */
+	serverAddr.sin_family = AF_INET;
+	/* Set port number, using htons function to use proper byte order */
+	serverAddr.sin_port = htons(7891);
+	/* Set IP address to localhost */
+	serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+	/* Set all bits of the padding field to 0 */
+	memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);  
+
+	/*---- Connect the socket to the server using the address struct ----*/
+	addr_size = sizeof serverAddr;
+	connect(clientSocket, (struct sockaddr *) &serverAddr, addr_size);
+
+	/*----Open File and get the size of file----*/
+	fd = open("test.wav", O_RDONLY);
+	fstat(fd, &stat);
+	file_size = stat.st_size;
+	printf("File_size = %d\n", file_size);
+	sprintf(buffer,"%d", file_size);
+
+	/*---- Send message to the socket of the incoming connection ----*/
+	//strcpy(buffer, itoa(file_size));
+	send(clientSocket, buffer, 10, 0);
+	bzero(temp, BUFFER);
+	while ((count = read(fd, temp, BUFFER)) != 0)
 	{
-		printf("Connection error at client side..\n");
-		exit(1);
+	//	sendto(sid, send_data, 1024, 0, (struct sockaddr *)&client_socket, size);
+		send(clientSocket, temp, BUFFER, 0);
+		bzero(temp, BUFFER);
 	}
-
-	set_socket(&server_socket, AF_INET, 6000);
-
-	if (inet_aton("127.0.0.1", &server_socket.sin_addr)==0) 
-	{
-		fprintf(stderr, "inet_aton() failed\n");
-		exit(1);
-	}
-
-	printf("Enter the name of the file you want to see : ");
-	scanf("%s", send_data);
-	int fd = open("sanket.mp3", O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IXUSR);
-	sendto(sid, send_data, 1024, 0, (struct sockaddr *)&server_socket, size);
-	printf("================= Contents of the File =====================\n");
-	while(1)
-	{
-		int size;
-		recvfrom(sid, temp, 1024, 0, (struct sockaddr *)&server_socket, (socklen_t *)&size);
-		printf("Deserialize it : %s\n",temp);
-		deserialize(temp, &size, receive_data);
-		if(!strcmp(receive_data, "ENDOFFILE"))
-		{
-			printf("============================================================\n");
-			break;
-		}
-		else
-			write(fd, receive_data, size);
-	}
-//	fcloseall();
-	close(sid);
-
 	return 0;
 }
