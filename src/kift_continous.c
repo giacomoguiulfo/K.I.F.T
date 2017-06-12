@@ -97,8 +97,7 @@ static ps_decoder_t *ps;
 static cmd_ln_t *config;
 static FILE *rawfd;
 
-	static void
-print_word_times()
+static void print_word_times()
 {
 	int frame_rate = cmd_ln_int32_r(config, "-frate");
 	ps_seg_t *iter = ps_seg_iter(ps);
@@ -115,8 +114,7 @@ print_word_times()
 	}
 }
 
-	static int
-check_wav_header(char *header, int expected_sr)
+static int check_wav_header(char *header, int expected_sr)
 {
 	int sr;
 
@@ -143,8 +141,7 @@ check_wav_header(char *header, int expected_sr)
 /*
  * Continuous recognition from a file
  */
-	static void
-recognize_from_file()
+static void recognize_from_file()
 {
 	int16 adbuf[2048];
 	const char *fname;

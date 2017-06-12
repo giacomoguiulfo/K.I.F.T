@@ -1,5 +1,8 @@
 # BINARY
 kift
+out.wav
+client
+server
 
 # Prerequisites
 *.d
