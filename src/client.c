@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/11 18:00:39 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/12 00:41:02 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/12 00:51:20 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
-#include <sys/stat.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -51,36 +50,33 @@ void deserialize(char *buffer, int *size, char *data)
 	data[j++] = '\0';
 }
 
-#define BUFFER 1024
 int main()
 {
 	int sid = 0, bid = 0, con = 0;
-
-	char				send_data[BUFFER];
-	char				receive_data[BUFFER];
-	char				temp[BUFFER];
-	struct hostent		*host;
-	struct sockaddr_in	server_socket;
-	struct stat			stat;
+	char *send_data = (char *)malloc(1024*sizeof(char));
+	char *receive_data = (char *)malloc(1024*sizeof(char));
+	char *temp = (char *)malloc(1024*sizeof(char));
+	struct hostent *host;
+	struct sockaddr_in server_socket;
 	int size = sizeof(server_socket);
-	int					file_size;
 
 	if((sid = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1)
 	{
 		printf("Connection error at client side..\n");
 		exit(1);
 	}
+
 	set_socket(&server_socket, AF_INET, 6000);
+
 	if (inet_aton("127.0.0.1", &server_socket.sin_addr)==0) 
 	{
 		fprintf(stderr, "inet_aton() failed\n");
 		exit(1);
 	}
+
 	printf("Enter the name of the file you want to see : ");
 	scanf("%s", send_data);
 	int fd = open("sanket.mp3", O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IXUSR);
-	fstat(fd, &stat);
-	file_size = stat.st_size;
 	sendto(sid, send_data, 1024, 0, (struct sockaddr *)&server_socket, size);
 	printf("================= Contents of the File =====================\n");
 	while(1)
