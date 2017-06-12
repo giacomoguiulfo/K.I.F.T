@@ -6,14 +6,13 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 01:50:16 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/11 04:38:06 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/12 02:59:21 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <kift.h>
 
 /**
-
 int		main(int argc, char **argv)
 {
 	ps_decoder_t *ps;
@@ -52,7 +51,7 @@ int		main(int argc, char **argv)
 
 	recognize_from_microphone();
 //	say(strdup(hyp));
-//	fclose(fh);
+	fclose(fh);
 	ps_free(ps);
 	cmd_ln_free_r(config);
 	return 0;

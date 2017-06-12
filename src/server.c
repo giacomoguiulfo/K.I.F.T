@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/12 00:57:43 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/12 01:44:50 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/12 03:03:00 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #define BUFFER 1024
 int main()
 {
+	static int				fileno;
 	int						welcomeSocket;
 	int						count;
 	int						newSocket;

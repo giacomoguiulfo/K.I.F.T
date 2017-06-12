@@ -67,9 +67,14 @@
 
 #include "pocketsphinx.h"
 
+static ps_decoder_t *ps;
+static cmd_ln_t *config;
+static FILE *rawfd;
+
+/**
 static const arg_t cont_args_def[] = {
 	POCKETSPHINX_OPTIONS,
-	/* Argument file. */
+	// Argument file.
 	{"-argfile",
 		ARG_STRING,
 		NULL,
@@ -92,27 +97,7 @@ static const arg_t cont_args_def[] = {
 		"Print word times in file transcription."},
 	CMDLN_EMPTY_OPTION
 };
-
-static ps_decoder_t *ps;
-static cmd_ln_t *config;
-static FILE *rawfd;
-
-static void print_word_times()
-{
-	int frame_rate = cmd_ln_int32_r(config, "-frate");
-	ps_seg_t *iter = ps_seg_iter(ps);
-	while (iter != NULL) {
-		int32 sf, ef, pprob;
-		float conf;
-
-		ps_seg_frames(iter, &sf, &ef);
-		pprob = ps_seg_prob(iter, NULL, NULL, NULL);
-		conf = logmath_exp(ps_get_logmath(ps), pprob);
-		printf("%s %.3f %.3f %f\n", ps_seg_word(iter), ((float)sf / frame_rate),
-				((float) ef / frame_rate), conf);
-		iter = ps_seg_next(iter);
-	}
-}
+**/
 
 static int check_wav_header(char *header, int expected_sr)
 {
@@ -138,19 +123,36 @@ static int check_wav_header(char *header, int expected_sr)
 	return 1;
 }
 
+static void print_word_times()
+{
+	int frame_rate = cmd_ln_int32_r(config, "-frate");
+	ps_seg_t *iter = ps_seg_iter(ps);
+	while (iter != NULL) {
+		int32 sf, ef, pprob;
+		float conf;
+
+		ps_seg_frames(iter, &sf, &ef);
+		pprob = ps_seg_prob(iter, NULL, NULL, NULL);
+		conf = logmath_exp(ps_get_logmath(ps), pprob);
+		printf("%s %.3f %.3f %f\n", ps_seg_word(iter), ((float)sf / frame_rate),
+				((float) ef / frame_rate), conf);
+		iter = ps_seg_next(iter);
+	}
+}
+
 /*
  * Continuous recognition from a file
  */
-static void recognize_from_file()
+static void recognize_from_file(const char *fname)
 {
 	int16 adbuf[2048];
-	const char *fname;
+	//const char *fname;
 	const char *hyp;
 	int32 k;
 	uint8 utt_started, in_speech;
 	int32 print_times = cmd_ln_boolean_r(config, "-time");
 
-	fname = cmd_ln_str_r(config, "-infile");
+	//fname = cmd_ln_str_r(config, "-infile");
 	if ((rawfd = fopen(fname, "rb")) == NULL) {
 		E_FATAL_SYSTEM("Failed to open file '%s' for reading",
 				fname);
@@ -203,21 +205,15 @@ static void recognize_from_file()
 	fclose(rawfd);
 }
 
-/* Sleep for specified msec */
-	static void
-sleep_msec(int32 ms)
+// Sleep for specified msec
+static void		sleep_msec(int32 ms)
 {
-#if (defined(_WIN32) && !defined(GNUWINCE)) || defined(_WIN32_WCE)
-	Sleep(ms);
-#else
-	/* ------------------- Unix ------------------ */
 	struct timeval tmo;
 
 	tmo.tv_sec = 0;
 	tmo.tv_usec = ms * 1000;
 
 	select(0, NULL, NULL, NULL, &tmo);
-#endif
 }
 
 /*
@@ -228,8 +224,8 @@ sleep_msec(int32 ms)
  *        print utterance result;
  *     }
  */
-	static void
-recognize_from_microphone()
+/**
+static void recognize_from_microphone()
 {
 	ad_rec_t *ad;
 	int16 adbuf[2048];
@@ -259,7 +255,7 @@ recognize_from_microphone()
 			E_INFO("Listening...\n");
 		}
 		if (!in_speech && utt_started) {
-			/* speech -> silence transition, time to start new utterance  */
+			// speech -> silence transition, time to start new utterance
 			ps_end_utt(ps);
 			hyp = ps_get_hyp(ps, NULL );
 			if (hyp != NULL) {
@@ -277,14 +273,20 @@ recognize_from_microphone()
 	}
 	ad_close(ad);
 }
+**/
 
 int main(int argc, char *argv[])
 {
 	char const *cfg;
 
-	config = cmd_ln_parse_r(NULL, cont_args_def, argc, argv, TRUE);
+	config = cmd_ln_init(NULL, ps_args(), TRUE,
+			"-hmm", MODELDIR "/en-us/en-us",
+			"-lm", MODELDIR "/en-us/en-us.lm.bin",
+			"-dict", MODELDIR "/en-us/cmudict-en-us.dict",
+			NULL);
 
-	/* Handle argument file as -argfile. */
+	/**
+	// Handle argument file as -argfile. //
 	if (config && (cfg = cmd_ln_str_r(config, "-argfile")) != NULL) {
 		config = cmd_ln_parse_file_r(config, cont_args_def, cfg, FALSE);
 	}
@@ -296,6 +298,8 @@ int main(int argc, char *argv[])
 	}
 
 	ps_default_search_args(config);
+	**/
+
 	ps = ps_init(config);
 	if (ps == NULL) {
 		cmd_ln_free_r(config);
@@ -304,14 +308,16 @@ int main(int argc, char *argv[])
 
 	E_INFO("%s COMPILED ON: %s, AT: %s\n\n", argv[0], __DATE__, __TIME__);
 
+	/**
 	if (cmd_ln_str_r(config, "-infile") != NULL) {
 		recognize_from_file();
 	} else if (cmd_ln_boolean_r(config, "-inmic")) {
 		recognize_from_microphone();
 	}
-
+	**/
+	recognize_from_file("test.wav");
 	ps_free(ps);
 	cmd_ln_free_r(config);
 
-	return 0;
+	return (0);
 }
