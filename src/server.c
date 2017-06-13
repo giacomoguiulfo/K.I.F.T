@@ -40,9 +40,9 @@ int main()
 	/* Address family = Internet */
 	serverAddr.sin_family = AF_INET;
 	/* Set port number, using htons function to use proper byte order */
-	serverAddr.sin_port = htons(3000);
+	serverAddr.sin_port = htons(8500);
 	/* Set IP address to localhost */
-	serverAddr.sin_addr.s_addr = inet_addr("localhost");
+	serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 	/* Set all bits of the padding field to 0 */
 	memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);
 
@@ -63,20 +63,22 @@ int main()
 	recv(newSocket, buffer, 1024, 0);
 	int fd = open("out.wav", O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IXUSR);
 	printf("Testing: %s\n", buffer);
-	return (0);
+
+	/*---- Print the received message ----*/
+	file_size = atoi(buffer);
+	count = 0;
+	printf("Recieved File_Size: %d\n", file_size);
+	bzero(buffer, BUFFER);
+	while(1)
+	{
+		//printf("Data\n");
+		recv(newSocket, buffer, 1024, 0);
+		//write(1, buffer, BUFFER);
+		count += write(fd, buffer, BUFFER);
+		if (count >= file_size)
+			break;
+		bzero(buffer, BUFFER);
+
+	}
+	return 0;
 }
-//
-// 	/*---- Print the received message ----*/
-// 	file_size = atoi(buffer);
-// 	count = 0;
-// 	printf("Recieved File_Size: %d", file_size);
-// 	bzero(buffer, BUFFER);
-// 	while(1)
-// 	{
-// 		recv(newSocket, buffer, 1024, 0);
-// 		count += write(fd, buffer, BUFFER);
-// 		if (count >= file_size)
-// 			break;
-// 	}
-// 	return 0;
-// }

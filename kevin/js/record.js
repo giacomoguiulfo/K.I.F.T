@@ -1,6 +1,33 @@
 
+
+
+
+
+
+
+
+// record voice
+
 var record = require('node-record-lpcm16')
 var fs = require('fs')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //	fs.unlinkSync('../test.wav')
 function start_recording() {
@@ -13,24 +40,48 @@ function start_recording() {
   }).pipe(file);
 
 
+  setTimeout(function () {
+
+		stats = fs.statSync('../test.wav').size;
+		console.log(stats);
+		client.write(stats.toString());
+		var readStream = fs.createReadStream('../test.wav');
+		readStream.pipe(client);
+  }, 7000)
+
 }
 
-/*
-var http = require("http");
-var server = http.createServer(function(request, response) {
-  //response.writeHead(200, {"Content-Type": "text/html"});
-  response.write("30");
-  // response.write("<html>");
-  // response.write("<head>");
-  // response.write("<title>Hello World Page</title>");
-  // response.write("</head>");
-  // response.write("<body>");
-  // response.write("Hello World!");
-  // response.write("</body>");
-  // response.write("</html>");
-  response.end();
+
+
+
+
+
+
+
+
+
+
+
+// client code
+
+var net = require('net');
+
+var client = new net.Socket();
+client.connect(8500, '127.0.0.1', function() {
+	console.log('Connected');
+
+
+	//client.write('Hello, server! Love, Client.');
+//	console.write('Hello, server! Love, Client.');
 });
 
-server.listen(3000, 'localhost');
-console.log("Server is listening");
-*/
+
+
+client.on('data', function(data) {
+	console.log('Received: ' + data);
+	client.destroy(); // kill client after server's response
+});
+
+client.on('close', function() {
+	console.log('Connection closed');
+});
