@@ -6,12 +6,25 @@
 /*   By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/11 02:21:22 by jaleman           #+#    #+#             */
-/*   Updated: 2017/06/11 04:38:02 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/14 18:56:35 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <kift.h>
 #define ERROR	(-1)
+
+/*
+** This function copies str to appropriate buffer in server struct
+*/
+
+void	ft_putbuf(const char *str, t_server *server)
+{
+	if (server->response_len != 0)
+		return;
+	server->response_len = strlen(str);
+	strncpy(server->response, str, server->response_len);
+	printf("%s\n", str);
+}
 
 /*
 ** This function do one of the following:
@@ -22,27 +35,45 @@
 **   - Sleep
 */
 
-static int	control_finder(char *cmd)
+static int	control_finder(char *cmd, t_server *server)
 {
 	int		ret;
 
 	if (!strcmp(cmd, "show active programs"))
+	{
 		ret = system("osascript -e 'tell application \"System Events\"' \
 		-e 'key code 160' -e 'end tell'");
+		ft_putbuf("showing active programs", server);
+	}
 	else if (!strcmp(cmd, "search"))
+	{
 		ret = system("osascript -e 'tell application \"System Events\"' \
 		-e 'key code 131' -e 'end tell'");
+		ft_putbuf("showing search results", server);
+	}
 	else if (!strcmp(cmd, "hide hidden files"))
+	{
 		ret = system("defaults write com.apple.finder AppleShowAllFiles NO \
 		&& killall Finder '/System/Library/CoreServices/Finder.app'");
+		ft_putbuf("showing search results", server);
+	}
 	else if (!strcmp(cmd, "show hidden files"))
+	{
 		ret = system("defaults write com.apple.finder AppleShowAllFiles YES \
 		&& killall Finder '/System/Library/CoreServices/Finder.app'");
+		ft_putbuf("showing search results", server);
+	}
 	else if (!strcmp(cmd, "show hidden files"))
+	{
 		ret = system("defaults write com.apple.finder AppleShowAllFiles YES \
 		&& killall Finder '/System/Library/CoreServices/Finder.app'");
+		ft_putbuf("showing search results", server);
+	}
 	else if (!strcmp(cmd, "go to sleep"))
+	{
 		ret = system("osascript -e 'tell application \"Finder\" to sleep'");
+		ft_putbuf("showing search results", server);
+	}
 	ret = 0;
 	return (ret);
 }
@@ -54,20 +85,29 @@ static int	control_finder(char *cmd)
 **   - Brightness display to 5%
 */
 
-static int	control_display(char *cmd)
+static int	control_display(char *cmd, t_server *server)
 {
 	int		ret;
 
 	if (!strcmp(cmd, "invert colors"))
+	{
 		ret = system("osascript -e 'tell application \"System Events\"' \
 		-e 'key code 28 using {control down, option down, command down}' \
 		-e 'end tell'");
+		ft_putbuf("showing search results", server);
+	}
 	else if (!strcmp(cmd, "lights on") || !strcmp(cmd, "undim the screen"))
+	{
 		ret = system("osascript -e 'tell application \"System Events\"' \
 		-e 'repeat 16 times' -e 'key code 144' -e 'end repeat' -e 'end tell'");
+		ft_putbuf("showing search results", server);
+	}
 	else if (!strcmp(cmd, "lights off") || !strcmp(cmd, "dim the screen"))
+	{
 		ret = system("osascript -e 'tell application \"System Events\"' \
 		-e 'repeat 16 times' -e 'key code 145' -e 'end repeat' -e 'end tell'");
+		ft_putbuf("showing search results", server);
+	}
 	ret = 0;
 	return (ret);
 }
@@ -78,14 +118,20 @@ static int	control_display(char *cmd)
 **   - Unmute the sound.
 */
 
-static int	control_sound(char *cmd)
+static int	control_sound(char *cmd, t_server *server)
 {
 	int		ret;
 
 	if (!strcmp(cmd, "mute") || !strcmp(cmd, "shut up"))
+	{
 		ret = system("osascript -e 'set volume with output muted'");
+		ft_putbuf("showing search results", server);
+	}
 	else if (!strcmp(cmd, "unmute") || !strcmp(cmd, "speak"))
+	{
 		ret = system("osascript -e 'set volume without output muted'");
+		ft_putbuf("showing search results", server);
+	}
 	ret = 0;
 	return (ret);
 }
@@ -96,19 +142,25 @@ static int	control_sound(char *cmd)
 **   - Takes a screenshot of just a section of the screen.
 */
 
-static int	control_screenshot(char *cmd)
+static int	control_screenshot(char *cmd, t_server *server)
 {
 	int		ret;
 
 	if (!strcmp(cmd, "screenshot"))
+	{
 		ret = system("screencapture ~/Desktop/$(date +%Y%m%d%H%M%S).png");
+		ft_putbuf("showing search results", server);
+	}
 	else if (!strcmp(cmd, "take a section"))
+	{
 		ret = system("screencapture -i ~/Desktop/$(date +%Y%m%d%H%M%S).png");
+		ft_putbuf("showing search results", server);
+	}
 	ret = 0;
 	return (ret);
 }
 
-static int	control_say(char *cmd)
+static int	control_say(char *cmd, t_server *server)
 {
 	int		ret;
 	char	*tmp;
@@ -116,34 +168,27 @@ static int	control_say(char *cmd)
 	{
 		tmp += 3;
 		ret = say(tmp);
+		ft_putbuf("showing search results", server);
 	}
 	ret = 0;
 	return (ret);
-}
-/*
-** This function is from my libft, it uses ft_putendl instead of printf.
-*/
-
-void	ft_puterror(char *str, int ret)
-{
-	printf("%s\n", str);
-	exit(ret);
 }
 
 /*
 ** Run a specific command if it matches the words.
 */
 
-void		run_commands(char *cmd)
+void		run_commands(char *cmd, t_server *server)
 {
-	if (control_finder(cmd) == ERROR)
-		ft_puterror("Something went wrong!", -1);
-	if (control_display(cmd) == ERROR)
-		ft_puterror("Something went wrong!", -1);
-	if (control_sound(cmd) == ERROR)
-		ft_puterror("Something went wrong!", -1);
-	if (control_screenshot(cmd) == ERROR)
-		ft_puterror("Something went wrong!", -1);
-	if (control_say(cmd) == ERROR)
-		ft_puterror("Something went wrong!", -1);
+	if (control_finder(cmd, server) == ERROR)
+		ft_putbuf("something went wrong!", server);
+	if (control_display(cmd, server) == ERROR)
+		ft_putbuf("something went wrong!", server);
+	if (control_sound(cmd, server) == ERROR)
+		ft_putbuf("something went wrong!", server);
+	if (control_screenshot(cmd, server) == ERROR)
+		ft_putbuf("something went wrong!", server);
+	if (control_say(cmd, server) == ERROR)
+		ft_putbuf("something went wrong!", server);
+	ft_putbuf("command not recognized", server);
 }

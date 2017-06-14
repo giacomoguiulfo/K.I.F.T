@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 01:50:55 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/14 07:45:36 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/14 18:57:21 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,13 @@ typedef struct	s_server
 {
 	char	recognized[BUFFER];
 	int	recognized_len;
+	char	response[BUFFER];
+	int	response_len;
+	char	send[BUFFER * 12];
+	int	send_len;
 }		t_server;
 
 int		init_pocketsphinx(t_server *server);
-void		run_commands(char *cmd);
+void		run_commands(char *cmd, t_server *server);
 int		say(char *input);
 #endif
