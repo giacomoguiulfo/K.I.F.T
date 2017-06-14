@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/12 00:57:43 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/14 07:09:40 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/14 07:46:21 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ int main()
 
 	/*---- Read the message from the server into the buffer ----*/
 	recv(newSocket, buffer, 1024, 0);
-	int fd = open("out.wav", O_TRUNC, S_IRUSR | S_IWUSR | S_IXUSR);
+//	int fd = open("out.wav", O_TRUNC, S_IRUSR | S_IWUSR | S_IXUSR);
+	int fd = open("out.wav", O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IXUSR);
 	printf("Testing: %s\n", buffer);
 
 	/*---- Print the received message ----*/
@@ -82,7 +83,8 @@ int main()
 		bzero(buffer, BUFFER);
 
 	}
-	return 0;
 	init_pocketsphinx(&server);
-	printf("Server out: = %s\n", server.reply);
+	run_commands(server.recognized);
+	printf("Server out: %s\n", server.recognized);
+	return (0);
 }
