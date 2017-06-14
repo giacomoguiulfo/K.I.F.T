@@ -1,56 +1,3 @@
-/* -*- c-basic-offset: 4; indent-tabs-mode: nil -*- */
-/* ====================================================================
- * Copyright (c) 1999-2010 Carnegie Mellon University.  All rights
- * reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer. 
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * This work was supported in part by funding from the Defense Advanced 
- * Research Projects Agency and the National Science Foundation of the 
- * United States of America, and the CMU Sphinx Speech Consortium.
- *
- * THIS SOFTWARE IS PROVIDED BY CARNEGIE MELLON UNIVERSITY ``AS IS'' AND 
- * ANY EXPRESSED OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, 
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL CARNEGIE MELLON UNIVERSITY
- * NOR ITS EMPLOYEES BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY 
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * ====================================================================
- *
- */
-/*
- * continuous.c - Simple pocketsphinx command-line application to test
- *                both continuous listening/silence filtering from microphone
- *                and continuous file transcription.
- */
-
-/*
- * This is a simple example of pocketsphinx application that uses continuous listening
- * with silence filtering to automatically segment a continuous stream of audio input
- * into utterances that are then decoded.
- * 
- * Remarks:
- *   - Each utterance is ended when a silence segment of at least 1 sec is recognized.
- *   - Single-threaded implementation for portability.
- *   - Uses audio library; can be replaced with an equivalent custom library.
- */
-
 #include <kift.h>
 #include <stdio.h>
 #include <string.h>
@@ -66,32 +13,6 @@
 #include <sphinxbase/ad.h>
 
 #include "pocketsphinx.h"
-
-static const arg_t cont_args_def[] = {
-	POCKETSPHINX_OPTIONS,
-	/* Argument file. */
-	{"-argfile",
-		ARG_STRING,
-		NULL,
-		"Argument file giving extra arguments."},
-	{"-adcdev",
-		ARG_STRING,
-		NULL,
-		"Name of audio device to use for input."},
-	{"-infile",
-		ARG_STRING,
-		NULL,
-		"Audio file to transcribe."},
-	{"-inmic",
-		ARG_BOOLEAN,
-		"no",
-		"Transcribe audio from microphone."},
-	{"-time",
-		ARG_BOOLEAN,
-		"no",
-		"Print word times in file transcription."},
-	CMDLN_EMPTY_OPTION
-};
 
 static ps_decoder_t *ps;
 static cmd_ln_t *config;
@@ -141,71 +62,67 @@ static int check_wav_header(char *header, int expected_sr)
 /*
  * Continuous recognition from a file
  */
-static void recognize_from_file()
+
+static void recognize_from_file(const char *fname, t_server *server)
 {
 	int16 adbuf[2048];
-	const char *fname;
 	const char *hyp;
 	int32 k;
 	uint8 utt_started, in_speech;
 	int32 print_times = cmd_ln_boolean_r(config, "-time");
 
-	fname = cmd_ln_str_r(config, "-infile");
-	if ((rawfd = fopen(fname, "rb")) == NULL) {
+	if ((rawfd = fopen(fname, "rb")) == NULL)
+	{
 		E_FATAL_SYSTEM("Failed to open file '%s' for reading",
 				fname);
 	}
-
-	if (strlen(fname) > 4 && strcmp(fname + strlen(fname) - 4, ".wav") == 0) {
+	if (strlen(fname) > 4 && strcmp(fname + strlen(fname) - 4, ".wav") == 0)
+	{
 		char waveheader[44];
 		fread(waveheader, 1, 44, rawfd);
 		if (!check_wav_header(waveheader, (int)cmd_ln_float32_r(config, "-samprate")))
 			E_FATAL("Failed to process file '%s' due to format mismatch.\n", fname);
 	}
-
-	if (strlen(fname) > 4 && strcmp(fname + strlen(fname) - 4, ".mp3") == 0) {
-		E_FATAL("Can not decode mp3 files, convert input file to WAV 16kHz 16-bit mono before decoding.\n");
-	}
-
 	ps_start_utt(ps);
 	utt_started = FALSE;
 
-	while ((k = fread(adbuf, sizeof(int16), 2048, rawfd)) > 0) {
+	while ((k = fread(adbuf, sizeof(int16), 2048, rawfd)) > 0)
+	{
 		ps_process_raw(ps, adbuf, k, FALSE, FALSE);
 		in_speech = ps_get_in_speech(ps);
-		if (in_speech && !utt_started) {
+		if (in_speech && !utt_started) 
 			utt_started = TRUE;
-		} 
-		if (!in_speech && utt_started) {
+		if (!in_speech && utt_started)
+		{
 			ps_end_utt(ps);
 			hyp = ps_get_hyp(ps, NULL);
 			if (hyp != NULL)
-				printf("%s\n", hyp);
-			if (print_times)
-				print_word_times();
+			{
+				ft_printf("%{red}\t%s%{eoc}\n", hyp);
+				run_commands(strdup(hyp));
+				strncpy(server->reply, hyp, strlen(hyp));
+			}
 			fflush(stdout);
-
 			ps_start_utt(ps);
 			utt_started = FALSE;
 		}
 	}
 	ps_end_utt(ps);
-	if (utt_started) {
+	if (utt_started)
+	{
 		hyp = ps_get_hyp(ps, NULL);
-		if (hyp != NULL) {
-			printf("%s\n", hyp);
-			if (print_times) {
-				print_word_times();
-			}
+		if (hyp != NULL) 
+		{
+			ft_printf("%{red}\t%s%{eoc}\n", hyp);
+			run_commands(strdup(hyp));
+			strncpy(server->reply, hyp, strlen(hyp));
 		}
 	}
-
 	fclose(rawfd);
 }
 
 /* Sleep for specified msec */
-	static void
-sleep_msec(int32 ms)
+static void sleep_msec(int32 ms)
 {
 #if (defined(_WIN32) && !defined(GNUWINCE)) || defined(_WIN32_WCE)
 	Sleep(ms);
@@ -228,8 +145,8 @@ sleep_msec(int32 ms)
  *        print utterance result;
  *     }
  */
-	static void
-recognize_from_microphone()
+
+static void recognize_from_microphone()
 {
 	ad_rec_t *ad;
 	int16 adbuf[2048];
@@ -259,12 +176,11 @@ recognize_from_microphone()
 			E_INFO("Listening...\n");
 		}
 		if (!in_speech && utt_started) {
-			/* speech -> silence transition, time to start new utterance  */
+			// speech -> silence transition, time to start new utterance
 			ps_end_utt(ps);
 			hyp = ps_get_hyp(ps, NULL );
 			if (hyp != NULL) {
 				printf("%s\n", hyp);
-				run_commands(strdup(hyp));
 				fflush(stdout);
 			}
 
@@ -278,13 +194,30 @@ recognize_from_microphone()
 	ad_close(ad);
 }
 
-int main(int argc, char *argv[])
+int init_pocketsphinx(t_server *server)
 {
-	char const *cfg;
+	config = cmd_ln_init(NULL, ps_args(), TRUE,
+			"-hmm", MODELDIR "/en-us/en-us",
+			"-lm", MODELDIR "/en-us/en-us.lm.bin",
+			"-dict", MODELDIR "/en-us/cmudict-en-us.dict",
+			NULL);
+	ps_default_search_args(config);
+	ps = ps_init(config);
+	if (ps == NULL) {
+		cmd_ln_free_r(config);
+		return 1;
+	}
+	recognize_from_file("out.wav", server);
+	ps_free(ps);
+	cmd_ln_free_r(config);
+	return (0);
+}
 
-	config = cmd_ln_parse_r(NULL, cont_args_def, argc, argv, TRUE);
+	/**
+//	char const *cfg;
+	//config = cmd_ln_parse_r(NULL, cont_args_def, argc, argv, TRUE);
 
-	/* Handle argument file as -argfile. */
+	// Handle argument file as -argfile.
 	if (config && (cfg = cmd_ln_str_r(config, "-argfile")) != NULL) {
 		config = cmd_ln_parse_file_r(config, cont_args_def, cfg, FALSE);
 	}
@@ -295,23 +228,9 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	ps_default_search_args(config);
-	ps = ps_init(config);
-	if (ps == NULL) {
-		cmd_ln_free_r(config);
-		return 1;
-	}
-
-	E_INFO("%s COMPILED ON: %s, AT: %s\n\n", argv[0], __DATE__, __TIME__);
-
 	if (cmd_ln_str_r(config, "-infile") != NULL) {
 		recognize_from_file();
 	} else if (cmd_ln_boolean_r(config, "-inmic")) {
 		recognize_from_microphone();
 	}
-
-	ps_free(ps);
-	cmd_ln_free_r(config);
-
-	return 0;
-}
+	**/
