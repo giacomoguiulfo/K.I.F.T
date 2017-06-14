@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/12 00:57:43 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/14 07:02:20 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/14 07:09:40 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 int main()
 {
 	t_server					server;
+	static int				fileno;
 	int						welcomeSocket;
 	int						count;
 	int						newSocket;
@@ -41,7 +42,7 @@ int main()
 	/* Address family = Internet */
 	serverAddr.sin_family = AF_INET;
 	/* Set port number, using htons function to use proper byte order */
-	serverAddr.sin_port = htons(7891);
+	serverAddr.sin_port = htons(8500);
 	/* Set IP address to localhost */
 	serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 	/* Set all bits of the padding field to 0 */
@@ -63,18 +64,23 @@ int main()
 	/*---- Read the message from the server into the buffer ----*/
 	recv(newSocket, buffer, 1024, 0);
 	int fd = open("out.wav", O_TRUNC, S_IRUSR | S_IWUSR | S_IXUSR);
+	printf("Testing: %s\n", buffer);
 
 	/*---- Print the received message ----*/
 	file_size = atoi(buffer);
 	count = 0;
-	printf("Recieved File_Size: %d", file_size);
+	printf("Recieved File_Size: %d\n", file_size);
 	bzero(buffer, BUFFER);
 	while(1)
 	{
+		//printf("Data\n");
 		recv(newSocket, buffer, 1024, 0);
+		//write(1, buffer, BUFFER);
 		count += write(fd, buffer, BUFFER);
 		if (count >= file_size)
 			break;
+		bzero(buffer, BUFFER);
+
 	}
 	return 0;
 	init_pocketsphinx(&server);

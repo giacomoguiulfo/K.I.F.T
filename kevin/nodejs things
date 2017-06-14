@@ -1,0 +1,7 @@
+
+npm install -g browser-sync
+npm install -g electron-prebuilt
+
+brew install sox
+npm install node-record-lpcm16
+npm install -g bower
