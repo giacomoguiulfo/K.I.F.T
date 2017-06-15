@@ -321,7 +321,7 @@ int	init_pocketsphinx(t_server *server)
 		recognize_from_microphone();
 	}
 	**/
-	recognize_from_file("test.wav", server);
+	recognize_from_file("out.wav", server);
 	ps_free(ps);
 	cmd_ln_free_r(config);
 	return (0);

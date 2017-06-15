@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/12 00:57:43 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/15 02:39:20 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/15 03:02:28 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,12 @@ int	recieve_wav(t_server *server, char *inbuffer)
 	int			count;
 	char			buffer[BUFFER];
 
-	unlink("out.wav");
+//	unlink("out.wav");
 	//	int fd = open("out.wav", O_TRUNC, S_IRUSR | S_IWUSR | S_IXUSR);
 	int fd = open("out.wav", O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IXUSR);
+	if (fd < 0)
+		LOG("ERROR");
+	printf("fd = %d\n", fd);
 	file_size = atoi(inbuffer);
 	count = 0;
 	printf("Recieved File_Size: %d\n", file_size);
@@ -108,7 +111,7 @@ int	main()
 	bzero(&server, sizeof(server));
 	welcomeSocket = socket(PF_INET, SOCK_STREAM, 0);
 	serverAddr.sin_family = AF_INET;
-	serverAddr.sin_port = htons(8200);
+	serverAddr.sin_port = htons(8300);
 	serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 	memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);
 	bind(welcomeSocket, (struct sockaddr *) &serverAddr, sizeof(serverAddr));
