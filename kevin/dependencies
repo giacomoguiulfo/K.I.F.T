@@ -15,9 +15,6 @@ npm install node-record-lpcm16
 
 
 // add to .zshrc file
-
-browser-sync start --server --files "*/*"
-
 npm install -g browser-sync
 npm install -g electron-prebuilt
 npm install -g bower
