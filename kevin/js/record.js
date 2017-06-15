@@ -1,33 +1,7 @@
-
-
-
-
-
-
-
-
 // record voice
 
 var record = require('node-record-lpcm16')
 var fs = require('fs')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //	fs.unlinkSync('../test.wav')
 function start_recording() {
@@ -44,7 +18,8 @@ function start_recording() {
 
 		stats = fs.statSync('../test.wav').size;
 		console.log(stats);
-		client.write(stats.toString());
+		client.write("#" + stats.toString());
+		console.log("#" + stats.toString());
 		var readStream = fs.createReadStream('../test.wav');
 		readStream.pipe(client);
   }, 7000)
@@ -52,22 +27,12 @@ function start_recording() {
 }
 
 
-
-
-
-
-
-
-
-
-
-
 // client code
 
 var net = require('net');
 
 var client = new net.Socket();
-client.connect(8500, '127.0.0.1', function() {
+client.connect(8200, '127.0.0.1', function() {
 	console.log('Connected');
 
 

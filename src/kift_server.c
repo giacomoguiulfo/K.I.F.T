@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/12 00:57:43 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/14 21:36:31 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/15 02:39:20 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@
 int	newSocket;
 
 int	client_out(t_server *server)
-{
-	int	i;
-	char	*out;
-
+{ int	i; char	*out; 
 	out = server->send;
 	i = 0;
 	out[i] = '{';
@@ -49,17 +46,16 @@ int	client_out(t_server *server)
 	return (0);
 }
 
-int	recieve_wav(t_server *server)
+int	recieve_wav(t_server *server, char *inbuffer)
 {
-	char			buffer[BUFFER];
 	int			file_size;
 	int			count;
+	char			buffer[BUFFER];
 
-	recv(newSocket, buffer, 1024, 0);
 	unlink("out.wav");
 	//	int fd = open("out.wav", O_TRUNC, S_IRUSR | S_IWUSR | S_IXUSR);
 	int fd = open("out.wav", O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IXUSR);
-	file_size = atoi(buffer);
+	file_size = atoi(inbuffer);
 	count = 0;
 	printf("Recieved File_Size: %d\n", file_size);
 	bzero(buffer, BUFFER);
@@ -71,6 +67,30 @@ int	recieve_wav(t_server *server)
 			break;
 		bzero(buffer, BUFFER);
 
+	}
+	init_pocketsphinx(server);
+	run_commands(server->recognized, server);
+	client_out(server);
+	ft_printf("%{red}Server send: %s\n%{eoc}", server->send);
+	return (0);
+}
+
+int		begin(t_server *server)
+{
+	char		buffer[BUFFER];
+
+	bzero(server, sizeof(t_server));
+	bzero(buffer, BUFFER);
+	CHK1(read(newSocket, buffer, BUFFER) == -1, printf("ERROR READ"), -1);
+	printf("%s\n", buffer);
+	if (buffer[0] == '#')
+	{
+		recieve_wav(server, &buffer[1]);
+	}
+	else 
+	{
+		printf("ERROR!");
+		exit(EXIT_FAILURE);
 	}
 	return (0);
 }
@@ -88,7 +108,7 @@ int	main()
 	bzero(&server, sizeof(server));
 	welcomeSocket = socket(PF_INET, SOCK_STREAM, 0);
 	serverAddr.sin_family = AF_INET;
-	serverAddr.sin_port = htons(8500);
+	serverAddr.sin_port = htons(8200);
 	serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 	memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);
 	bind(welcomeSocket, (struct sockaddr *) &serverAddr, sizeof(serverAddr));
@@ -96,13 +116,13 @@ int	main()
 		printf("Listening\n");
 	else
 		printf("Error\n");
-	addr_size = sizeof serverStorage;
-	newSocket = accept(welcomeSocket, (struct sockaddr *) &serverStorage, &addr_size);
-	//Read the message from the server into the buffer
-	recieve_wav(&server);
-	init_pocketsphinx(&server);
-	run_commands(server.recognized, &server);
-	client_out(&server);
-	printf("Server send: %s\n", server.send);
+	addr_size = sizeof(serverStorage);
+	while (1)
+	{
+		newSocket = accept(welcomeSocket, (struct sockaddr *) &serverStorage, &addr_size);
+		printf("%s:%d connected\n", inet_ntoa(serverAddr.sin_addr), ntohs(serverAddr.sin_port));
+		begin(&server);
+		//close(newScocket);
+	}
 	return (0);
 }
