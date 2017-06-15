@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/12 00:57:43 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/15 03:02:28 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/15 05:22:05 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ int		begin(t_server *server)
 	bzero(buffer, BUFFER);
 	CHK1(read(newSocket, buffer, BUFFER) == -1, printf("ERROR READ"), -1);
 	printf("%s\n", buffer);
-	if (buffer[0] == '#')
+	if (ISDIGIT(buffer[0]))
 	{
-		recieve_wav(server, &buffer[1]);
+		recieve_wav(server, buffer);
 	}
 	else 
 	{
@@ -111,7 +111,7 @@ int	main()
 	bzero(&server, sizeof(server));
 	welcomeSocket = socket(PF_INET, SOCK_STREAM, 0);
 	serverAddr.sin_family = AF_INET;
-	serverAddr.sin_port = htons(8300);
+	serverAddr.sin_port = htons(8000);
 	serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 	memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);
 	bind(welcomeSocket, (struct sockaddr *) &serverAddr, sizeof(serverAddr));

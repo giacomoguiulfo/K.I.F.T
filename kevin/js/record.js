@@ -1,51 +1,43 @@
-// record voice
+// ************************************************************************** //
+//                                                                            //
+//                                                        :::      ::::::::   //
+//   record.js                                          :+:      :+:    :+:   //
+//                                                    +:+ +:+         +:+     //
+//   By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+        //
+//                                                +#+#+#+#+#+   +#+           //
+//   Created: 2017/06/14 00:13:40 by jaleman           #+#    #+#             //
+//   Updated: 2017/06/14 00:13:41 by jaleman          ###   ########.fr       //
+//                                                                            //
+// ************************************************************************** //
 
-var record = require('node-record-lpcm16')
-var fs = require('fs')
+// Declarations
+var fs = require('fs');
+var record = require('node-record-lpcm16');
+var filename = "../test.wav";
 
-//	fs.unlinkSync('../test.wav')
-function start_recording() {
+// ...
+function idleMode() {
+	stats = fs.statSync(filename).size;
+	//console.log(stats.toString());
+	client.write(stats.toString());
+	var readStream = fs.createReadStream(filename);
+	readStream.pipe(client);
+	//fs.unlinkSync(filename);
+}
 
-
-	var file = fs.createWriteStream('../test.wav', { encoding: 'binary' })
+// ...
+function startRecording() {
+	var file = fs.createWriteStream(filename, { encoding: 'binary' })
 	record.start({
 	  sampleRate: 16000,
 	  verbose: true
-  }).pipe(file);
-
-
-  setTimeout(function () {
-
-		stats = fs.statSync('../test.wav').size;
-		console.log("#" + stats.toString());
-	 	client.write("#" + stats.toString());
-		var readStream = fs.createReadStream('../test.wav');
-		readStream.pipe(client);
-  }, 7000)
-
+	})
+	.pipe(file)
+	.on('close', () => {
+	  //console.log('finished recording audio')
+	  idleMode();
+	  startRecording();
+	  });
 }
 
-
-// client code
-
-var net = require('net');
-
-var client = new net.Socket();
-client.connect(8300, '127.0.0.1', function() {
-	console.log('Connected');
-
-
-	//client.write('Hello, server! Love, Client.');
-//	console.write('Hello, server! Love, Client.');
-});
-
-
-
-client.on('data', function(data) {
-	console.log('Received: ' + data);
-	client.destroy(); // kill client after server's response
-});
-
-client.on('close', function() {
-	console.log('Connection closed');
-});
+startRecording();
