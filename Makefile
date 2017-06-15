@@ -6,7 +6,7 @@
 #    By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/16 07:02:04 by gguiulfo          #+#    #+#              #
-#*   Updated: 2017/06/14 07:48:20 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/06/15 05:23:37 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,7 +69,7 @@ clean:
 	@make -C libft clean
 
 fclean: clean
-	@rm -rf $(NAME)
+	@rm -rf $(NAME) out.wav test.wav
 	@printf "\e[32mRemoved Executable\e[0m\n"
 	@make -C libft fclean
 
