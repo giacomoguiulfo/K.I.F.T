@@ -1,0 +1,30 @@
+// Kevin dependencies
+
+npm install electron
+npm install node-record-lpcm16
+
+
+// Dependencies (from README.md)
+
+brew install sox
+brew install node
+brew install swig sdl
+brew tap watsonbox/cmu-sphinx
+brew install --HEAD watsonbox/cmu-sphinx/cmu-sphinxbase
+brew install --HEAD watsonbox/cmu-sphinx/cmu-pocketsphinx
+brew install --HEAD watsonbox/cmu-sphinx/cmu-sphinxtrain (only needed for training)
+
+
+// I need to add this to .zshrc file
+
+brew install sox
+brew install node
+npm install -g bower
+npm install -g electron
+npm install -g browser-sync
+npm install -g electron-prebuilt
+
+
+// Add this as an alias of some shit
+
+browser-sync start --server --files "*/*"
