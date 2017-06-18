@@ -6,7 +6,7 @@
 /*   By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/11 02:21:22 by jaleman           #+#    #+#             */
-/*   Updated: 2017/06/18 15:54:23 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 16:13:39 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,19 @@ static int	control_display(char *cmd, t_server *server)
 		ret = system("osascript -e 'tell application \"System Events\"' \
 		-e 'key code 28 using {control down, option down, command down}' \
 		-e 'end tell'");
-		ft_putbuf("showing search results", server);
+		ft_putbuf("inverting colors", server);
 	}
 	else if (!strcmp(cmd, "LIGHTS ON") || !strcmp(cmd, "undim the screen"))
 	{
 		ret = system("osascript -e 'tell application \"System Events\"' \
 		-e 'repeat 16 times' -e 'key code 144' -e 'end repeat' -e 'end tell'");
-		ft_putbuf("showing search results", server);
+		ft_putbuf("turning lights on", server);
 	}
 	else if (!strcmp(cmd, "LIGHTS OFF") || !strcmp(cmd, "dim the screen"))
 	{
 		ret = system("osascript -e 'tell application \"System Events\"' \
 		-e 'repeat 16 times' -e 'key code 145' -e 'end repeat' -e 'end tell'");
-		ft_putbuf("showing search results", server);
+		ft_putbuf("turning lights off", server);
 	}
 	return (ret);
 }
@@ -73,12 +73,12 @@ static int	control_sound(char *cmd, t_server *server)
 	if (!strcmp(cmd, "VOLUME OFF"))
 	{
 		ret = system("osascript -e 'set volume with output muted'");
-		ft_putbuf("showing search results", server);
+		ft_putbuf("turning volume off", server);
 	}
 	else if (!strcmp(cmd, "VOLUME ON"))
 	{
 		ret = system("osascript -e 'set volume without output muted'");
-		ft_putbuf("showing search results", server);
+		ft_putbuf("turning volume off", server);
 	}
 	return (ret);
 }
@@ -97,12 +97,12 @@ static int	control_screenshot(char *cmd, t_server *server)
 	if (!strcmp(cmd, "SCREENSHOT"))
 	{
 		ret = system("screencapture ~/Desktop/$(date +%Y%m%d%H%M%S).png");
-		ft_putbuf("showing search results", server);
+		ft_putbuf("taking screenshot", server);
 	}
 	else if (!strcmp(cmd, "CAPTURE"))
 	{
 		ret = system("screencapture -i ~/Desktop/$(date +%Y%m%d%H%M%S).png");
-		ft_putbuf("showing search results", server);
+		ft_putbuf("taking screencapture", server);
 	}
 	return (ret);
 }
