@@ -5,14 +5,17 @@ The future of voice commands and super cool robot assistants
 ```
 git clone --recursive https://github.com/giacomoguiulfo/42-kift.git
 make
-./kift -inmic yes
+./kift 8080
 ```
 
 ## DEPENDENCIES
 ```
+brew install sox
+brew install node
 brew tap watsonbox/cmu-sphinx
 brew install --HEAD watsonbox/cmu-sphinx/cmu-sphinxbase
 brew install --HEAD watsonbox/cmu-sphinx/cmu-pocketsphinx
 brew install --HEAD watsonbox/cmu-sphinx/cmu-sphinxtrain (only needed for training)
-brew install swig sdl
+npm install electron
+npm install node-record-lpcm16
 ```
