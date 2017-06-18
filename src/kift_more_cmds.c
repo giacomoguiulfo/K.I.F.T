@@ -6,7 +6,7 @@
 /*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/18 10:25:58 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/06/18 15:42:22 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 15:53:21 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@
 
 static void	control_finder_extension(int *ret, char *cmd, t_server *server)
 {
-	if (!strcmp(cmd, "KEVIN SHOW HIDDEN FILES"))
+	if (!strcmp(cmd, "SHOW HIDDEN FILES"))
 	{
 		*ret = system("defaults write com.apple.finder AppleShowAllFiles YES \
 		&& killall Finder '/System/Library/CoreServices/Finder.app'");
 		ft_putbuf("showing hidden files", server);
 	}
-	else if (!strcmp(cmd, "KEVIN SLEEP"))
+	else if (!strcmp(cmd, "SLEEP"))
 	{
 		*ret = system("osascript -e 'tell application \"Finder\" to sleep'");
 		ft_putbuf("entering sleep mode", server);
@@ -41,13 +41,13 @@ int			control_finder(char *cmd, t_server *server)
 	int		ret;
 
 	ret = 0;
-	if (!strcmp(cmd, "KEVIN SHOW"))
+	if (!strcmp(cmd, "SHOW"))
 	{
 		ret = system("osascript -e 'tell application \"System Events\"' \
 		-e 'key code 160' -e 'end tell'");
 		ft_putbuf("showing active programs", server);
 	}
-	else if (!strcmp(cmd, "KEVIN DO NOT SHOW HIDDEN FILES"))
+	else if (!strcmp(cmd, "DO NOT SHOW HIDDEN FILES"))
 	{
 		ret = system("defaults write com.apple.finder AppleShowAllFiles NO \
 		&& killall Finder '/System/Library/CoreServices/Finder.app'");
