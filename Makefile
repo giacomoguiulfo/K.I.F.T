@@ -6,14 +6,14 @@
 #    By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/16 07:02:04 by gguiulfo          #+#    #+#              #
-#    Updated: 2017/06/18 05:42:39 by gguiulfo         ###   ########.fr        #
+#    Updated: 2017/06/18 10:43:20 by gguiulfo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= kift
 
 CC 			:= gcc
-#CFLAGS		+= -Wall -Wextra -Werror
+CFLAGS		+= -Wall -Wextra -Werror
 CFLAGS		+= -I includes -I libft/includes
 CFLAGS		+= `pkg-config --cflags pocketsphinx sphinxbase` -DMODELDIR=\"`pkg-config --variable=modeldir pocketsphinx`\"
 
@@ -25,7 +25,8 @@ SRCDIR		:= src
 
 LIBFT		:= libft/libft.a
 
-KIFTFILES	:= kift_continous kift_commands kift_server kift_log
+KIFTFILES	:= 	kift_continous kift_commands kift_server kift_log kift_utils \
+				kift_more_cmds
 
 SRC			:= $(addprefix $(SRCDIR)/, $(addsuffix .c, $(KIFTFILES)))
 

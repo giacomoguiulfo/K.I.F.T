@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/12 00:57:43 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/18 09:15:46 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 10:05:57 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 int	g_new_socket;
 
-static int	client_out(t_server *server)
+static int	client_out(t_server *server, int fd)
 {
 	int		i;
 	char	*out;
@@ -36,6 +36,7 @@ static int	client_out(t_server *server)
 	strncpy(&out[i], server->response, server->response_len);
 	i += server->response_len;
 	server->send_len = i;
+	close(fd);
 	return (0);
 }
 
@@ -63,10 +64,9 @@ static void	recieve_wav(t_server *server, char *inbuffer)
 	}
 	init_pocketsphinx(server);
 	run_commands(server->recognized, server);
-	client_out(server);
+	client_out(server, fd);
 	dprintf(g_new_socket, "Server send: %s\n", server->send);
 	kift_log(server->recognized);
-	close(fd);
 }
 
 static int	begin(t_server *server)

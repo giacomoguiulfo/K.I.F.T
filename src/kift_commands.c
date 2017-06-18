@@ -6,76 +6,21 @@
 /*   By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/11 02:21:22 by jaleman           #+#    #+#             */
-/*   Updated: 2017/06/18 05:43:57 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 10:25:38 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <kift.h>
-#define ERROR	-1
 
 /*
 ** This function copies str to appropriate buffer in server struct
 */
 
-void	ft_putbuf(const char *str, t_server *server)
+void		ft_putbuf(const char *str, t_server *server)
 {
-	// if (server->response_len != 0)
-	// 	return;
 	server->response_len = strlen(str);
 	strncpy(server->response, str, server->response_len);
 	printf("%s\n", str);
-}
-
-/*
-** This function do one of the following:
-**   - Show the active programs
-**   - Search
-**   - Hide hidden files
-**   - Show hidden files
-**   - Sleep
-*/
-
-static int	control_finder(char *cmd, t_server *server)
-{
-	int		ret;
-
-	ret = 0;
-	if (!strcmp(cmd, "show active programs"))
-	{
-		ret = system("osascript -e 'tell application \"System Events\"' \
-		-e 'key code 160' -e 'end tell'");
-		ft_putbuf("showing active programs", server);
-	}
-	else if (!strcmp(cmd, "search"))
-	{
-		ret = system("osascript -e 'tell application \"System Events\"' \
-		-e 'key code 131' -e 'end tell'");
-		ft_putbuf("showing search results", server);
-	}
-	else if (!strcmp(cmd, "hide hidden files"))
-	{
-		ret = system("defaults write com.apple.finder AppleShowAllFiles NO \
-		&& killall Finder '/System/Library/CoreServices/Finder.app'");
-		ft_putbuf("showing search results", server);
-	}
-	else if (!strcmp(cmd, "show hidden files"))
-	{
-		ret = system("defaults write com.apple.finder AppleShowAllFiles YES \
-		&& killall Finder '/System/Library/CoreServices/Finder.app'");
-		ft_putbuf("showing search results", server);
-	}
-	else if (!strcmp(cmd, "show hidden files"))
-	{
-		ret = system("defaults write com.apple.finder AppleShowAllFiles YES \
-		&& killall Finder '/System/Library/CoreServices/Finder.app'");
-		ft_putbuf("showing search results", server);
-	}
-	else if (!strcmp(cmd, "go to sleep"))
-	{
-		ret = system("osascript -e 'tell application \"Finder\" to sleep'");
-		ft_putbuf("showing search results", server);
-	}
-	return (ret);
 }
 
 /*
@@ -166,7 +111,7 @@ static int	control_screenshot(char *cmd, t_server *server)
 
 void		run_commands(char *cmd, t_server *server)
 {
-	if (strncmp("kevin", cmd, 5))
+	if (strncmp("KEVIN", cmd, 5))
 	{
 		ft_putbuf("name missing", server);
 		return ;

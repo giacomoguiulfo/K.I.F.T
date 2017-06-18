@@ -6,7 +6,7 @@
 /*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/18 06:20:54 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/06/18 08:41:49 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 10:43:50 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,36 +60,7 @@ static ps_decoder_t	*g_ps;
 static cmd_ln_t		*g_config;
 static FILE			*g_rawdf;
 
-static int	e_error_rtn(char *header, int index, char *error_msg)
-{
-	E_ERROR(error_msg, header[index]);
-	return (0);
-}
-
-static int	check_wav_header(char *header, int expected_sr)
-{
-	int sr;
-
-	if (header[34] != 0x10)
-		return (e_error_rtn(header, 34,
-		"Input audio file has [%d] bits per sample instead of 16\n"));
-	if (header[20] != 0x1)
-		return (e_error_rtn(header, 20,
-		"Input audio file has compression [%d] and not required PCM\n"));
-	if (header[22] != 0x1)
-		return (e_error_rtn(header, 22,
-		"Input audio file has [%d] channels, expected single channel mono\n"));
-	sr = ((header[24] & 0xFF) | ((header[25] & 0xFF) << 8) |
-		((header[26] & 0xFF) << 16) | ((header[27] & 0xFF) << 24));
-	if (sr != expected_sr)
-	{
-		E_ERROR(WAV_MSG_E" [%d], but decoder expects [%d]\n", sr, expected_sr);
-		return (0);
-	}
-	return (1);
-}
-
-static void	print_word_times()
+static void	print_word_times(void)
 {
 	float		conf;
 	int			frame_rate;
@@ -105,74 +76,78 @@ static void	print_word_times()
 		conf = logmath_exp(ps_get_logmath(g_ps), norm_ints.pprob);
 		printf("%s %.3f %.3f %f\n", ps_seg_word(iter),
 				((float)norm_ints.sf / frame_rate),
-				((float) norm_ints.ef / frame_rate), conf);
+				((float)norm_ints.ef / frame_rate), conf);
 		iter = ps_seg_next(iter);
 	}
 }
 
+static void	recognize_in_loop(t_recognize_h *all_v, t_server *server)
+{
+	ps_process_raw(g_ps, all_v->adbuf, all_v->k, FALSE, FALSE);
+	all_v->in_speech = ps_get_in_speech(g_ps);
+	if (all_v->in_speech && !(all_v->utt_started))
+		all_v->utt_started = TRUE;
+	if (!(all_v->in_speech) && all_v->utt_started)
+	{
+		ps_end_utt(g_ps);
+		all_v->hyp = ps_get_hyp(g_ps, NULL);
+		if (all_v->hyp != NULL)
+		{
+			printf("%s\n", all_v->hyp);
+			server->recognized_len = strlen(all_v->hyp);
+			strncpy(server->recognized, all_v->hyp, server->recognized_len);
+		}
+		if (all_v->print_times)
+			print_word_times();
+		fflush(stdout);
+		ps_start_utt(g_ps);
+		all_v->utt_started = FALSE;
+	}
+}
 
+static void	recognize_utility(t_recognize_h *all_v, t_server *server)
+{
+	all_v->hyp = ps_get_hyp(g_ps, NULL);
+	if (all_v->hyp != NULL)
+	{
+		printf("%s\n", all_v->hyp);
+		server->recognized_len = strlen(all_v->hyp);
+		strncpy(server->recognized, all_v->hyp, server->recognized_len);
+		if (all_v->print_times)
+			print_word_times();
+	}
+}
 
 static void	recognize_from_file(const char *fname, t_server *server)
 {
-	t_recognize_h all_v;
+	t_recognize_h	all_v;
+	char			waveheader[44];
 
 	all_v.print_times = cmd_ln_boolean_r(g_config, "-time");
 	if ((g_rawdf = fopen(fname, "rb")) == NULL)
 		E_FATAL_SYSTEM("Failed to open file '%s' for reading", fname);
 	if (strlen(fname) > 4 && strcmp(fname + strlen(fname) - 4, ".wav") == 0)
 	{
-		char waveheader[44];
 		fread(waveheader, 1, 44, g_rawdf);
-		if (!check_wav_header(waveheader, (int)cmd_ln_float32_r(g_config, "-samprate")))
-			E_FATAL("Failed to process file '%s' due to format mismatch.\n", fname);
+		if (!check_wav_header(waveheader,
+			(int)cmd_ln_float32_r(g_config, "-samprate")))
+			E_FATAL("Failed to process file '%s' due to format mismatch.\n",
+			fname);
 	}
 	if (strlen(fname) > 4 && strcmp(fname + strlen(fname) - 4, ".mp3") == 0)
-		E_FATAL("Can not decode mp3 files, convert input file to WAV 16kHz 16-bit mono before decoding.\n");
+		E_FATAL(MP3_ERR_1" "MP3_ERR_2);
 	ps_start_utt(g_ps);
 	all_v.utt_started = FALSE;
 	while ((all_v.k = fread(all_v.adbuf, sizeof(int16), 2048, g_rawdf)) > 0)
-	{
-		ps_process_raw(g_ps, all_v.adbuf, all_v.k, FALSE, FALSE);
-		all_v.in_speech = ps_get_in_speech(g_ps);
-		if (all_v.in_speech && !(all_v.utt_started))
-			all_v.utt_started = TRUE;
-		if (!(all_v.in_speech) && all_v.utt_started)
-		{
-			ps_end_utt(g_ps);
-			all_v.hyp = ps_get_hyp(g_ps, NULL);
-			if (all_v.hyp != NULL)
-			{
-				printf("%s\n", all_v.hyp);
-				server->recognized_len = strlen(all_v.hyp);
-				strncpy(server->recognized, all_v.hyp, server->recognized_len);
-			}
-			if (all_v.print_times)
-				print_word_times();
-			fflush(stdout);
-			ps_start_utt(g_ps);
-			all_v.utt_started = FALSE;
-		}
-	}
+		recognize_in_loop(&all_v, server);
 	ps_end_utt(g_ps);
 	if (all_v.utt_started)
-	{
-		all_v.hyp = ps_get_hyp(g_ps, NULL);
-		if (all_v.hyp != NULL)
-		{
-			printf("%s\n", all_v.hyp);
-			server->recognized_len = strlen(all_v.hyp);
-			strncpy(server->recognized, all_v.hyp, server->recognized_len);
-			if (all_v.print_times)
-				print_word_times();
-		}
-	}
+		recognize_utility(&all_v, server);
 	fclose(g_rawdf);
 }
 
 int			init_pocketsphinx(t_server *server)
 {
-	char const	*cfg;
-
 	g_config = cmd_ln_init(NULL, ps_args(), TRUE,
 			"-hmm", MODELDIR "/en-us/en-us",
 			"-lm", "./new_acoustic_model/new_acoustic_model.lm",
