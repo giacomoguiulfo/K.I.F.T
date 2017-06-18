@@ -6,7 +6,7 @@
 /*   By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/11 02:21:22 by jaleman           #+#    #+#             */
-/*   Updated: 2017/06/14 18:56:35 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/18 05:28:10 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 
 void	ft_putbuf(const char *str, t_server *server)
 {
-	if (server->response_len != 0)
-		return;
+	// if (server->response_len != 0)
+	// 	return;
 	server->response_len = strlen(str);
 	strncpy(server->response, str, server->response_len);
 	printf("%s\n", str);
@@ -39,6 +39,7 @@ static int	control_finder(char *cmd, t_server *server)
 {
 	int		ret;
 
+	ret = 0;
 	if (!strcmp(cmd, "show active programs"))
 	{
 		ret = system("osascript -e 'tell application \"System Events\"' \
@@ -74,7 +75,6 @@ static int	control_finder(char *cmd, t_server *server)
 		ret = system("osascript -e 'tell application \"Finder\" to sleep'");
 		ft_putbuf("showing search results", server);
 	}
-	ret = 0;
 	return (ret);
 }
 
@@ -89,6 +89,7 @@ static int	control_display(char *cmd, t_server *server)
 {
 	int		ret;
 
+	ret = 0;
 	if (!strcmp(cmd, "invert colors"))
 	{
 		ret = system("osascript -e 'tell application \"System Events\"' \
@@ -108,7 +109,6 @@ static int	control_display(char *cmd, t_server *server)
 		-e 'repeat 16 times' -e 'key code 145' -e 'end repeat' -e 'end tell'");
 		ft_putbuf("showing search results", server);
 	}
-	ret = 0;
 	return (ret);
 }
 
@@ -122,6 +122,7 @@ static int	control_sound(char *cmd, t_server *server)
 {
 	int		ret;
 
+	ret = 0;
 	if (!strcmp(cmd, "mute") || !strcmp(cmd, "shut up"))
 	{
 		ret = system("osascript -e 'set volume with output muted'");
@@ -132,7 +133,6 @@ static int	control_sound(char *cmd, t_server *server)
 		ret = system("osascript -e 'set volume without output muted'");
 		ft_putbuf("showing search results", server);
 	}
-	ret = 0;
 	return (ret);
 }
 
@@ -146,6 +146,7 @@ static int	control_screenshot(char *cmd, t_server *server)
 {
 	int		ret;
 
+	ret = 0;
 	if (!strcmp(cmd, "screenshot"))
 	{
 		ret = system("screencapture ~/Desktop/$(date +%Y%m%d%H%M%S).png");
@@ -156,7 +157,6 @@ static int	control_screenshot(char *cmd, t_server *server)
 		ret = system("screencapture -i ~/Desktop/$(date +%Y%m%d%H%M%S).png");
 		ft_putbuf("showing search results", server);
 	}
-	ret = 0;
 	return (ret);
 }
 
@@ -180,6 +180,11 @@ static int	control_say(char *cmd, t_server *server)
 
 void		run_commands(char *cmd, t_server *server)
 {
+	if (strncmp("kevin", cmd, 5))
+	{
+		ft_putbuf("name missing", server);
+		return ;
+	}
 	if (control_finder(cmd, server) == ERROR)
 		ft_putbuf("something went wrong!", server);
 	if (control_display(cmd, server) == ERROR)
@@ -190,5 +195,6 @@ void		run_commands(char *cmd, t_server *server)
 		ft_putbuf("something went wrong!", server);
 	if (control_say(cmd, server) == ERROR)
 		ft_putbuf("something went wrong!", server);
-	ft_putbuf("command not recognized", server);
+	if (server->response_len != 0)
+		ft_putbuf("command not recognized", server);
 }
