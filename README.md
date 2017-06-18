@@ -19,3 +19,13 @@ brew install --HEAD watsonbox/cmu-sphinx/cmu-sphinxtrain (only needed for traini
 npm install electron
 npm install node-record-lpcm16
 ```
+
+## TODO
+
+- Edit Makefile
+- Clean directory
+- Man page
+- More commands
+- Add libft (delete submodule)
+- Fix JS
+- Verify norm and check everything is working
