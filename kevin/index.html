@@ -37,12 +37,10 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <title>Kevin - Speech Recognition</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-
-  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css'>
-  <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+  <link rel="stylesheet" href="css/reset.min.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -52,126 +50,81 @@
     <!-- Background image-->
     <div class="bg-image"></div>
 
-      <!-- -->
-      <div class='followe'>
+      <!-- Show communication stats -->
+      <div class="stats">
         <ul>
-
           <!-- Number of responses received -->
           <li>
-            <span class='number'>1</span>
+            <span class='number'>42</span>
             <span class='legend'>Responses</span>
           </li>
-
           <!-- Number of messages sent -->
           <li>
-            <span class='number'>1</span>
+            <span class='number'>42</span>
             <span class='legend'>Messages</span>
           </li>
-
             <div class="clean-div"></div>
         </ul>
       </div>
 
-        <!-- -->
-        <div class="image"></div>
-        <input type="radio" id='one' name='contorol' checked/>
-        <label for="one"><i class='icon-comments-alt'></i></label>
-        <input type="radio" id='two' name='contorol' />
-        <label for="two"><i class='icon-list-ul'></i></label>
-        <input type="radio" id='three' name='contorol' />
-        <label for="three"><i class='icon-info'></i></label>
+    <!-- Controls -->
+    <div class="image"></div>
+    <input type="radio" id='one' name='control' checked/>
+    <label for="one"><i class='fa fa-comments-o' aria-hidden="true"></i></label>
+    <input type="radio" id='two' name='control' />
+    <label for="two"><i class='fa fa-list-ul' aria-hidden="true"></i></label>
+    <input type="radio" id='three' name='control' onclick="text2speech('aboutMe');"/>
+    <label for="three"><i class='fa fa-info' aria-hidden="true"></i></label>
 
-        <!-- -->
-        <div class="all">
+    <!-- Chat -->
+    <div class="all">
 
-            <!-- -->
-            <div class="chat">
-                <div class="show-message">
-
-                    <div class="user">
-                        <img src="https://cdn0.iconfinder.com/data/icons/avatars-6/500/Avatar_boy_man_people_account_boss_client_beard_male_person_user-512.png" width=32 height=32 />
-                        <div class="message">
-                            <p>Kevin,</br>
-                                Go to sleep</p>
-                        </div>
-                    </div>
-
-                    <div class="kevin">
-                        <img src="images/logo-icon.png" width=32 height=32 />
-                        <div class="message">
-                            <p>Don't tell me what to do bitch!</br>
-                            </p>
-                        </div>
-                    </div>
-
-
-
-                    <div class="clean-div"></div>
-                </div>
-
-                <canvas id="meter" width="100%" height="50"></canvas>
-                <!--<div class="type-text">
-
-  				<input type="text" placeholder='Chat with Mostafa...' />
-  				<button type='submit'><i id='i' class='icon-comments-alt'></i></button>
-
-
+      <!-- Show messages -->
+      <div class="chat">
+        <div class="show-message mCustomScrollbar">
+          <div id="showMessage"></div>
+          <div class="clean-div"></div>
         </div>
-  -->
-            </div>
+        <!-- Volume meter -->
+        <canvas id="meter" width="400" height="50"></canvas>
+      </div>
 
-
-
-
-
-
-
-            <!--
-    pass javascript audio voice when click do this lol.
-    onclick="text-to-speech() -> get-txt <li> attribute"
-
-  -->
-            <div class="Link">
-                <div class="menu">
-                    <h1 style="padding-top: 20px; padding-left: 10px; margin-bottom: -30px; ">Say a command... It's as easy as:</h1>
-                    <ul>
-                        <li><a href="#">Kevin, time</a></li>
-                        <li><a href="#">Kevin, screenshot</a></li>
-                        <li><a href="#">Kevin, lights off</a></li>
-                        <li><a href="#">Kevin, invert colors</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <!--
-
-        pass javascript audio voice when click do this lol.
-        onclick="text-to-speech() -> get-txt <li> attribute"
-
-      -->
-            <div class="Description">
-                <p>Hello, my name is Kevin Putchar.</br>
-                    ...</br>
-                    ...</br>
-                    ...
-                </p>
-            </div>
-
-            <div class="clean-div"></div>
+      <!-- List of commands -->
+      <div class="command">
+        <div class="menu">
+          <h1>Say a command... It's as easy as:</h1>
+          <ul>
+            <li><a href="#" class="kevin_command">Kevin, time</a></li>
+            <li><a href="#" class="kevin_command">Kevin, screenshot</a></li>
+            <li><a href="#" class="kevin_command">Kevin, lights off</a></li>
+            <li><a href="#" class="kevin_command">Kevin, invert colors</a></li>
+          </ul>
         </div>
+      </div>
 
+      <!-- Kevin Kift info-->
+      <div class="about-me">
+        <p id="aboutMe">
+        Hello, my name is Kevin Kift.
+        I'm just a simple voice user interface using Sphinx.
+        I consider myself hardcore, because I'm C to the core.
+        </p>
+      </div>
+
+      <div class="clean-div"></div>
     </div>
 
-    <script src="js/jquery.2.1.3.min.js" charset="utf-8"></script>
-    <!--
-<script src="js/jquery.mCustomScrollbar.concat.min.js" charset="utf-8"></script>
--->
-    <script src="js/volume-meter.js" charset="utf-8"></script>
-    <script src="js/responsive-voice.js" charset="utf-8"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+  </div>
 
-    <script src="js/server.js"></script>
-
+  <!-- Scripts -->
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/volume-meter.js"></script>
+  <script type="text/javascript" src="js/responsive-voice.js"></script>
+  <script type="text/javascript" src="js/prefixfree.min.js"></script>
+  <script type="text/javascript" src="js/kift_voice.js"></script>
+  <script type="text/javascript" src="js/kift_chat.js"></script>
+  <script type="text/javascript" src="js/kift_client.js"></script>
+  <script type="text/javascript" src="js/kift_record.js"></script>
 
 </body>
 
