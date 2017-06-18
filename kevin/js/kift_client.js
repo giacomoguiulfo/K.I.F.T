@@ -12,6 +12,7 @@
 
 // Module declarations.
 var net = require('net');
+var globalStatus = true;
 
 // Define port number, ip address, and timeout.
 var PORT = 8080;
@@ -24,7 +25,7 @@ var client = new net.Socket();
 // Logs the ip address and port number when there's a connection.
 client.connect(PORT, HOST, function() {
     console.log('Connected to: ' + HOST + ':' + PORT);
-    //startRecord();
+	startRecord();
 });
 
 // If there's an error, retry connecting back to the server every few seconds,
@@ -45,6 +46,5 @@ client.on('error', function(e) {
 function getData() {
     client.on('data', function(data) {
         parseChat(String(data).split(";"));
-        //startRecord();
     });
 }

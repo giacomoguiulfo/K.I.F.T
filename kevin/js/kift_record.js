@@ -38,5 +38,3 @@ function startRecord() {
     })
     .pipe(file);
 }
-
-//startRecord();

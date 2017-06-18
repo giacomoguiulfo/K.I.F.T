@@ -26,7 +26,7 @@ function parseChat(message) {
     var kevinMessage = message[1];
 
     /*
-    	if kevinMessage == "name missing"
+    	if kevinMessage === "name missing"
     		return ;
     	else if kevinMessage == "something went wrong"
     		return ;
