@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 01:50:55 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/18 04:24:16 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 05:00:45 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct	s_server
 
 int				say(char *input);
 int				init_pocketsphinx(t_server *server);
+void			kift_log(char *recognized);
 void			run_commands(char *cmd, t_server *server);
 
 #endif
