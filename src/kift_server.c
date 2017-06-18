@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/12 00:57:43 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/18 04:14:56 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 04:58:21 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 int	g_new_socket;
 
-int		client_out(t_server *server)
+static int	client_out(t_server *server)
 {
 	int		i;
 	char	*out;
@@ -39,7 +39,7 @@ int		client_out(t_server *server)
 	return (0);
 }
 
-int		recieve_wav(t_server *server, char *inbuffer)
+static void	recieve_wav(t_server *server, char *inbuffer)
 {
 	char	buffer[BUFFER];
 	int		file_size;
@@ -65,10 +65,10 @@ int		recieve_wav(t_server *server, char *inbuffer)
 	run_commands(server->recognized, server);
 	client_out(server);
 	dprintf(g_new_socket, "Server send: %s\n", server->send);
-	return (0);
+	kift_log(server->recognized);
 }
 
-int		begin(t_server *server)
+static int	begin(t_server *server)
 {
 	char	buffer[BUFFER];
 
@@ -104,7 +104,7 @@ static int	check_port(int argc, char **argv)
 	return (tmp);
 }
 
-int		main(int argc, char **argv)
+int			main(int argc, char **argv)
 {
 	struct sockaddr_storage	server_storage;
 	struct sockaddr_in		server_addr;

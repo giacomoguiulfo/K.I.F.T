@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 01:50:55 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/18 02:52:52 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 04:24:16 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,19 @@
 # endif
 
 # define BUFFER 1024
-# define ASC_BRED	"\033[31;1m"
-# define ASC_EOC	"\033[0m"
 
 typedef struct	s_server
 {
-	char	recognized[BUFFER];
-	int	recognized_len;
-	char	response[BUFFER];
-	int	response_len;
-	char	send[BUFFER * 12];
-	int	send_len;
-}		t_server;
+	char		recognized[BUFFER];
+	int			recognized_len;
+	char		response[BUFFER];
+	int			response_len;
+	char		send[BUFFER * 12];
+	int			send_len;
+}				t_server;
 
-int		init_pocketsphinx(t_server *server);
-void		run_commands(char *cmd, t_server *server);
-int		say(char *input);
+int				say(char *input);
+int				init_pocketsphinx(t_server *server);
+void			run_commands(char *cmd, t_server *server);
+
 #endif

@@ -6,7 +6,7 @@
 #    By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/16 07:02:04 by gguiulfo          #+#    #+#              #
-#*   Updated: 2017/06/15 05:23:37 by jkalia           ###   ########.fr       *#
+#    Updated: 2017/06/18 04:58:05 by gguiulfo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,8 @@ OBJEXT		:= o
 SRCEXT		:= c
 
 LIBFT		:= libft/libft.a
- 
-KIFTFILES	:= kift_continous kift_commands kift_say kift_server
+
+KIFTFILES	:= kift_continous kift_commands kift_say kift_server kift_log
 SAMFILES	:= reciter sam render output debug processframes createtransitions
 
 SRC			:= $(addprefix $(SRCDIR)/, $(addsuffix .$(SRCEXT), $(KIFTFILES))) \
