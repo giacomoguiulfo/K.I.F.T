@@ -2,7 +2,7 @@
 
 npm install electron
 npm install node-record-lpcm16
-
+// npm install flashheart
 
 // Dependencies (from README.md)
 

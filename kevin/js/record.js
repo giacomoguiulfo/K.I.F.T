@@ -53,12 +53,14 @@ function startRecording() {
 	  sampleRate: 16000,
 	  verbose: true
 	})
-	.pipe(file)
 	.on('close', () => {
 	  //console.log('finished recording audio')
 	  idleMode();
-	  startRecording();
-	  });
+	  //startRecording();
+	  })
+	.pipe(file);
 }
 
+
+// start recording again when I receive the json string format shit thingy.
 startRecording();

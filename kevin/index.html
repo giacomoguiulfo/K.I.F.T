@@ -10,83 +10,107 @@
 <!--                                                                         -->
 <!-- *********************************************************************** -->
 
+<!--
+
+    ##
+    ##
+    ##       ##
+    ##     ##
+    ##    ##
+    ##  ##
+    ## #
+    ###        ###############
+    ###       ##             ##
+    ## ##    ##            ##
+    ##  ##   ##          ##
+    ##    ## ##       ##~
+    ##     ####    ##
+    ##      ######
+            ##
+            ##
+              ##
+                 ###############
+
+-->
+
 <!DOCTYPE html>
-<html >
+<html>
+
 <head>
   <meta charset="UTF-8">
   <title>Kevin - Speech Recognition</title>
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 
   <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css'>
-
+  <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
   <link rel="stylesheet" href="css/style.css">
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
-
 </head>
 
 <body>
+  <div class="container">
 
-<div class="container">
-
-    <!-- -->
-		<div class="bg-image"></div>
-
-      <!-- -->
-			<div class='followe'>
-				<ul>
-					<li>
-						<span class='number'>1</span>
-						<span class='legend'>Responses</span>
-					</li>
-					<li>
-						<span class='number'>1</span>
-						<span class='legend'>Messages</span>
-					</li>
-					<div class="badboy"></div>
-				</ul>
-			</div>
-
-    <!-- -->
-		<div class="image"></div>
-		<input type="radio" id='one' name='contorol' checked/>
-		<label for="one"><i class='icon-comments-alt'></i></label>
-		<input type="radio" id='two' name='contorol' />
-		<label for="two"><i class='icon-list-ul'></i></label>
-		<input type="radio" id='three' name='contorol' />
-		<label for="three"><i class='icon-info'></i></label>
-
-    <!-- -->
-    <div class="all">
+    <!-- Background image-->
+    <div class="bg-image"></div>
 
       <!-- -->
-  		<div class="chat">
-  			<div class="show-message">
+      <div class='followe'>
+        <ul>
 
-          <div class="user">
-  					<img src="https://cdn0.iconfinder.com/data/icons/avatars-6/500/Avatar_boy_man_people_account_boss_client_beard_male_person_user-512.png" width=32 height=32 />
-  					<div class="message">
-  						<p>Kevin,</br>
-  						Go to sleep</p>
-  					</div>
-  				</div>
+          <!-- Number of responses received -->
+          <li>
+            <span class='number'>1</span>
+            <span class='legend'>Responses</span>
+          </li>
 
-  				<div class="kevin">
-  					<img src="images/logo-icon.png" width=32 height=32 />
-  					<div class="message">
-  						<p>Don't tell me what to do bitch!</br>
-  						</p>
-  					</div>
-  				</div>
+          <!-- Number of messages sent -->
+          <li>
+            <span class='number'>1</span>
+            <span class='legend'>Messages</span>
+          </li>
+
+            <div class="clean-div"></div>
+        </ul>
+      </div>
+
+        <!-- -->
+        <div class="image"></div>
+        <input type="radio" id='one' name='contorol' checked/>
+        <label for="one"><i class='icon-comments-alt'></i></label>
+        <input type="radio" id='two' name='contorol' />
+        <label for="two"><i class='icon-list-ul'></i></label>
+        <input type="radio" id='three' name='contorol' />
+        <label for="three"><i class='icon-info'></i></label>
+
+        <!-- -->
+        <div class="all">
+
+            <!-- -->
+            <div class="chat">
+                <div class="show-message">
+
+                    <div class="user">
+                        <img src="https://cdn0.iconfinder.com/data/icons/avatars-6/500/Avatar_boy_man_people_account_boss_client_beard_male_person_user-512.png" width=32 height=32 />
+                        <div class="message">
+                            <p>Kevin,</br>
+                                Go to sleep</p>
+                        </div>
+                    </div>
+
+                    <div class="kevin">
+                        <img src="images/logo-icon.png" width=32 height=32 />
+                        <div class="message">
+                            <p>Don't tell me what to do bitch!</br>
+                            </p>
+                        </div>
+                    </div>
 
 
 
-  				<div class="badboy"></div>
-  			</div>
+                    <div class="clean-div"></div>
+                </div>
 
-	  <canvas id="meter" width="100%" height="50"></canvas>
-  			  <!--<div class="type-text">
+                <canvas id="meter" width="100%" height="50"></canvas>
+                <!--<div class="type-text">
 
   				<input type="text" placeholder='Chat with Mostafa...' />
   				<button type='submit'><i id='i' class='icon-comments-alt'></i></button>
@@ -94,7 +118,7 @@
 
         </div>
   -->
-  		</div>
+            </div>
 
 
 
@@ -102,53 +126,53 @@
 
 
 
-    <!--
+            <!--
     pass javascript audio voice when click do this lol.
     onclick="text-to-speech() -> get-txt <li> attribute"
 
   -->
-		<div class="Link">
-			<div class="menu">
-        <h1 style="padding-top: 20px; padding-left: 10px; margin-bottom: -30px; ">Say a command... It's as easy as:</h1>
-				<ul>
-					<li><a href="#">Kevin, time</a></li>
-          <li><a href="#">Kevin, screenshot</a></li>
-					<li><a href="#">Kevin, lights off</a></li>
-					<li><a href="#">Kevin, invert colors</a></li>
-				</ul>
-			</div>
-		</div>
+            <div class="Link">
+                <div class="menu">
+                    <h1 style="padding-top: 20px; padding-left: 10px; margin-bottom: -30px; ">Say a command... It's as easy as:</h1>
+                    <ul>
+                        <li><a href="#">Kevin, time</a></li>
+                        <li><a href="#">Kevin, screenshot</a></li>
+                        <li><a href="#">Kevin, lights off</a></li>
+                        <li><a href="#">Kevin, invert colors</a></li>
+                    </ul>
+                </div>
+            </div>
 
-        <!--
+            <!--
 
         pass javascript audio voice when click do this lol.
         onclick="text-to-speech() -> get-txt <li> attribute"
 
       -->
-    		<div class="Description">
-    			<p>Hello, my name is Kevin Putchar.</br>
-    				...</br>
-    				...</br>
-    				...
-    			</p>
-    		</div>
+            <div class="Description">
+                <p>Hello, my name is Kevin Putchar.</br>
+                    ...</br>
+                    ...</br>
+                    ...
+                </p>
+            </div>
 
-		<div class="badboy"></div>
-	</div>
+            <div class="clean-div"></div>
+        </div>
 
-</div>
+    </div>
 
-<script src="js/jquery.2.1.3.min.js" charset="utf-8"></script>
+    <script src="js/jquery.2.1.3.min.js" charset="utf-8"></script>
+    <!--
 <script src="js/jquery.mCustomScrollbar.concat.min.js" charset="utf-8"></script>
-<script src="js/volume-meter.js" charset="utf-8"></script>
-<script src="js/responsive-voice.js" charset="utf-8"></script>
+-->
+    <script src="js/volume-meter.js" charset="utf-8"></script>
+    <script src="js/responsive-voice.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 
-
-<script src="js/server.js" ></script>
-<script src="js/record.js" ></script>
-
-<script src="js/script.js" charset="utf-8"></script>
+    <script src="js/server.js"></script>
 
 
 </body>
+
 </html>

@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   style.css                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/06/17 19:59:52 by jaleman           #+#    #+#             */
+/*   Updated: 2017/06/17 19:59:53 by jaleman          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 @import url(https://fonts.googleapis.com/css?family=Gudea);
 
 body{
 	font-family: Gudea;
-	background : url('https://i.stack.imgur.com/xfn1X.jpg')
+	background : url('../images/background.jpg')
   no-repeat center center fixed;
   -webkit-background-size: cover;
   background-size: cover;
@@ -27,7 +39,7 @@ a:hover i[class^='icon-'] , a:hover i[class*='icon-']{
 	border-radius: 7px;
 }
 
-.badboy{
+.clean-div{
 	width: 0;
 	height: 0;
 	clear: both;
@@ -36,7 +48,7 @@ a:hover i[class^='icon-'] , a:hover i[class*='icon-']{
 .bg-image{
 	width: 402px;
 	height: 157px;
-	background-image: url('http://www.ceska-justice.cz/wp-content/uploads/2017/04/maxresdefault.jpg');
+	background-image: url('../images/mic.jpg');
 	position: relative;
 	border-bottom: 1px solid #38393A;
 }
