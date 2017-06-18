@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/12 00:57:43 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/18 05:02:16 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 09:15:46 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static void	recieve_wav(t_server *server, char *inbuffer)
 	client_out(server);
 	dprintf(g_new_socket, "Server send: %s\n", server->send);
 	kift_log(server->recognized);
+	close(fd);
 }
 
 static int	begin(t_server *server)
@@ -83,6 +84,7 @@ static int	begin(t_server *server)
 		printf("ERROR!");
 		exit(EXIT_FAILURE);
 	}
+	system("rm -f out.wav");
 	return (0);
 }
 
