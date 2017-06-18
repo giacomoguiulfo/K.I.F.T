@@ -6,14 +6,14 @@
 /*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/18 10:25:58 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/06/18 10:38:56 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 15:42:22 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <kift.h>
 
 /*
-** This function do one of the following:
+** These functions do one of the following:
 **   - Show the active programs
 **   - Search
 **   - Hide hidden files

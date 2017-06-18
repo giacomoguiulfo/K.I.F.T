@@ -6,7 +6,7 @@
 /*   By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/11 02:21:22 by jaleman           #+#    #+#             */
-/*   Updated: 2017/06/18 10:25:38 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 15:46:59 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 void		ft_putbuf(const char *str, t_server *server)
 {
+	if (server->response_len != 0)
+		return ;
 	server->response_len = strlen(str);
 	strncpy(server->response, str, server->response_len);
 	printf("%s\n", str);
@@ -124,6 +126,5 @@ void		run_commands(char *cmd, t_server *server)
 		ft_putbuf("something went wrong!", server);
 	if (control_screenshot(cmd, server) == ERROR)
 		ft_putbuf("something went wrong!", server);
-	if (server->response_len != 0)
-		ft_putbuf("command not recognized", server);
+	ft_putbuf("command not recognized", server);
 }

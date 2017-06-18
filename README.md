@@ -22,7 +22,6 @@ npm install node-record-lpcm16
 
 ## TODO
 
-- Edit Makefile
 - Clean directory
 - Man page
 - More commands
