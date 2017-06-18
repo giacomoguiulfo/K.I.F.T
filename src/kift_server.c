@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/12 00:57:43 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/18 03:13:23 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 04:14:56 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,12 @@ int		client_out(t_server *server)
 
 	out = server->send;
 	i = 0;
-	out[i] = '{';
-	++i;
-	out[i] = '"';
-	++i;
 	strncpy(&out[i], server->recognized, server->recognized_len);
 	i += server->recognized_len;
-	out[i] = '"';
-	++i;
-	out[i] = '"';
+	out[i] = ';';
 	++i;
 	strncpy(&out[i], server->response, server->response_len);
 	i += server->response_len;
-	out[i] = '"';
-	++i;
-	out[i] = '}';
-	++i;
 	server->send_len = i;
 	return (0);
 }
@@ -74,7 +64,7 @@ int		recieve_wav(t_server *server, char *inbuffer)
 	init_pocketsphinx(server);
 	run_commands(server->recognized, server);
 	client_out(server);
-	printf(ASC_BRED"Server send: %s\n"ASC_EOC, server->send);
+	dprintf(g_new_socket, "Server send: %s\n", server->send);
 	return (0);
 }
 
@@ -96,7 +86,25 @@ int		begin(t_server *server)
 	return (0);
 }
 
-int		main(int ac, char **av)
+static int	check_port(int argc, char **argv)
+{
+	int	tmp;
+
+	if (argc < 2)
+	{
+		dprintf(STDERR_FILENO, "%s: Too few arguments", argv[0]);
+		exit(EXIT_FAILURE);
+	}
+	tmp = atoi(argv[1]);
+	if (tmp < 1024 || tmp > 49151)
+	{
+		dprintf(STDERR_FILENO, "%s: Invalid port number", argv[0]);
+		exit(EXIT_FAILURE);
+	}
+	return (tmp);
+}
+
+int		main(int argc, char **argv)
 {
 	struct sockaddr_storage	server_storage;
 	struct sockaddr_in		server_addr;
@@ -107,7 +115,7 @@ int		main(int ac, char **av)
 	bzero(&server, sizeof(server));
 	welcome_socket = socket(PF_INET, SOCK_STREAM, 0);
 	server_addr.sin_family = AF_INET;
-	server_addr.sin_port = htons(8000);
+	server_addr.sin_port = htons(check_port(argc, argv));
 	server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
 	memset(server_addr.sin_zero, '\0', sizeof(server_addr.sin_zero));
 	bind(welcome_socket, (struct sockaddr *)&server_addr, sizeof(server_addr));
