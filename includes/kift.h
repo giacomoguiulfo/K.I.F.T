@@ -6,12 +6,13 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 01:50:55 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/14 21:36:33 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/18 02:52:52 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef KIFT_H
 # define KIFT_H
+
 # include <libft.h>
 # include <pocketsphinx.h>
 # include <reciter.h>
@@ -20,11 +21,15 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+
 # ifdef USESDL
 #  include <SDL.h>
 #  include <SDL_audio.h>
 # endif
-#define BUFFER 1024
+
+# define BUFFER 1024
+# define ASC_BRED	"\033[31;1m"
+# define ASC_EOC	"\033[0m"
 
 typedef struct	s_server
 {

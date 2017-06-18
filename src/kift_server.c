@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   kift_server.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/12 00:57:43 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/15 05:22:05 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/18 02:56:23 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int	newSocket;
+int	g_new_socket;
 
-int	client_out(t_server *server)
-{ int	i; char	*out; 
+int		client_out(t_server *server)
+{
+	int		i;
+	char	*out;
+
 	out = server->send;
 	i = 0;
 	out[i] = '{';
@@ -46,51 +49,46 @@ int	client_out(t_server *server)
 	return (0);
 }
 
-int	recieve_wav(t_server *server, char *inbuffer)
+int		recieve_wav(t_server *server, char *inbuffer)
 {
-	int			file_size;
-	int			count;
-	char			buffer[BUFFER];
+	char	buffer[BUFFER];
+	int		file_size;
+	int		count;
+	int		fd;
 
-//	unlink("out.wav");
-	//	int fd = open("out.wav", O_TRUNC, S_IRUSR | S_IWUSR | S_IXUSR);
-	int fd = open("out.wav", O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IXUSR);
+	fd = open("out.wav", O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IXUSR);
 	if (fd < 0)
 		LOG("ERROR");
-	printf("fd = %d\n", fd);
 	file_size = atoi(inbuffer);
 	count = 0;
-	printf("Recieved File_Size: %d\n", file_size);
+	printf("fd = %d\nRecieved File_Size: %d\n", fd, file_size);
 	bzero(buffer, BUFFER);
-	while(1)
+	while (1)
 	{
-		recv(newSocket, buffer, 1024, 0);
+		recv(g_new_socket, buffer, 1024, 0);
 		count += write(fd, buffer, BUFFER);
 		if (count >= file_size)
-			break;
+			break ;
 		bzero(buffer, BUFFER);
-
 	}
 	init_pocketsphinx(server);
 	run_commands(server->recognized, server);
 	client_out(server);
-	ft_printf("%{red}Server send: %s\n%{eoc}", server->send);
+	printf(ASC_BRED"Server send: %s\n"ASC_EOC, server->send);
 	return (0);
 }
 
 int		begin(t_server *server)
 {
-	char		buffer[BUFFER];
+	char	buffer[BUFFER];
 
 	bzero(server, sizeof(t_server));
 	bzero(buffer, BUFFER);
-	CHK1(read(newSocket, buffer, BUFFER) == -1, printf("ERROR READ"), -1);
+	CHK1(read(g_new_socket, buffer, BUFFER) == -1, printf("ERROR READ"), -1);
 	printf("%s\n", buffer);
 	if (ISDIGIT(buffer[0]))
-	{
 		recieve_wav(server, buffer);
-	}
-	else 
+	else
 	{
 		printf("ERROR!");
 		exit(EXIT_FAILURE);
@@ -98,34 +96,30 @@ int		begin(t_server *server)
 	return (0);
 }
 
-int	main()
+int		main(int ac, char **av)
 {
-	t_server				server;
-	static int				fileno;
-	int					welcomeSocket;
-	char					buffer[BUFFER];
-	struct sockaddr_in			serverAddr;
-	struct sockaddr_storage			serverStorage;
+	struct sockaddr_storage	server_storage;
+	struct sockaddr_in		server_addr;
 	socklen_t				addr_size;
+	t_server				server;
+	int						welcome_socket;
 
 	bzero(&server, sizeof(server));
-	welcomeSocket = socket(PF_INET, SOCK_STREAM, 0);
-	serverAddr.sin_family = AF_INET;
-	serverAddr.sin_port = htons(8000);
-	serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
-	memset(serverAddr.sin_zero, '\0', sizeof serverAddr.sin_zero);
-	bind(welcomeSocket, (struct sockaddr *) &serverAddr, sizeof(serverAddr));
-	if (listen(welcomeSocket, 5) == 0)
-		printf("Listening\n");
-	else
-		printf("Error\n");
-	addr_size = sizeof(serverStorage);
+	welcome_socket = socket(PF_INET, SOCK_STREAM, 0);
+	server_addr.sin_family = AF_INET;
+	server_addr.sin_port = htons(8000);
+	server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+	memset(server_addr.sin_zero, '\0', sizeof(server_addr.sin_zero));
+	bind(welcome_socket, (struct sockaddr *)&server_addr, sizeof(server_addr));
+	listen(welcome_socket, 5) == 0 ? printf("Listening\n") : printf("Error\n");
+	addr_size = sizeof(server_storage);
 	while (1)
 	{
-		newSocket = accept(welcomeSocket, (struct sockaddr *) &serverStorage, &addr_size);
-		printf("%s:%d connected\n", inet_ntoa(serverAddr.sin_addr), ntohs(serverAddr.sin_port));
+		g_new_socket = accept(welcome_socket,
+					(struct sockaddr *)&server_storage, &addr_size);
+		printf("%s:%d connected\n", inet_ntoa(server_addr.sin_addr),
+					ntohs(server_addr.sin_port));
 		begin(&server);
-		//close(newScocket);
 	}
 	return (0);
 }
