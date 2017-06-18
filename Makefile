@@ -6,7 +6,7 @@
 #    By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/16 07:02:04 by gguiulfo          #+#    #+#              #
-#    Updated: 2017/06/18 04:58:05 by gguiulfo         ###   ########.fr        #
+#    Updated: 2017/06/18 05:42:39 by gguiulfo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,29 +14,22 @@ NAME		:= kift
 
 CC 			:= gcc
 #CFLAGS		+= -Wall -Wextra -Werror
-CFLAGS		+= -I includes -I libft/includes -I src/sam/includes
+CFLAGS		+= -I includes -I libft/includes
 CFLAGS		+= `pkg-config --cflags pocketsphinx sphinxbase` -DMODELDIR=\"`pkg-config --variable=modeldir pocketsphinx`\"
-CFLAGS		+=  -O2 -DUSESDL `sdl-config --cflags`
 
 LDFLAGS		+= `pkg-config --libs pocketsphinx sphinxbase`
 LDFLAGS		+= -L libft/ -lft
-LDFLAGS		+= `sdl-config --libs`
 
 OBJDIR		:= obj
 SRCDIR		:= src
-SAMDIR		:= src/sam
-OBJEXT		:= o
-SRCEXT		:= c
 
 LIBFT		:= libft/libft.a
 
-KIFTFILES	:= kift_continous kift_commands kift_say kift_server kift_log
-SAMFILES	:= reciter sam render output debug processframes createtransitions
+KIFTFILES	:= kift_continous kift_commands kift_server kift_log
 
-SRC			:= $(addprefix $(SRCDIR)/, $(addsuffix .$(SRCEXT), $(KIFTFILES))) \
-				$(addprefix $(SAMDIR)/, $(addsuffix .$(SRCEXT), $(SAMFILES)))
+SRC			:= $(addprefix $(SRCDIR)/, $(addsuffix .c, $(KIFTFILES)))
 
-OBJ			:= $(patsubst $(SRCDIR)/%, $(OBJDIR)/%, $(SRC:.$(SRCEXT)=.$(OBJEXT))) \
+OBJ			:= $(patsubst $(SRCDIR)/%, $(OBJDIR)/%, $(SRC:.c=.o)) \
 
 MAX			:=	$(words $(OBJ))
 n			:=	x
@@ -58,7 +51,7 @@ $(NAME): $(LIBFT) $(OBJ)
 	@$(CC) $(LDFLAGS) -o $@ $^
 	@printf "\e[32mCompiled Executable\e[0m\n"
 
-$(OBJDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(LDFLAG) -o $@ -c $<
 	@printf "\r\e[32mCompiling...(%d/%d)\e[0m" $(COUNTER) $(MAX)

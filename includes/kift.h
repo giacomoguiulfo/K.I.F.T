@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 01:50:55 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/18 05:00:45 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 05:43:17 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,9 @@
 
 # include <libft.h>
 # include <pocketsphinx.h>
-# include <reciter.h>
-# include <sam.h>
-# include <debug.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-
-# ifdef USESDL
-#  include <SDL.h>
-#  include <SDL_audio.h>
-# endif
 
 # define BUFFER 1024
 
@@ -39,7 +31,6 @@ typedef struct	s_server
 	int			send_len;
 }				t_server;
 
-int				say(char *input);
 int				init_pocketsphinx(t_server *server);
 void			kift_log(char *recognized);
 void			run_commands(char *cmd, t_server *server);

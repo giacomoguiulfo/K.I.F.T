@@ -6,12 +6,12 @@
 /*   By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/11 02:21:22 by jaleman           #+#    #+#             */
-/*   Updated: 2017/06/18 05:28:10 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 05:43:57 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <kift.h>
-#define ERROR	(-1)
+#define ERROR	-1
 
 /*
 ** This function copies str to appropriate buffer in server struct
@@ -160,20 +160,6 @@ static int	control_screenshot(char *cmd, t_server *server)
 	return (ret);
 }
 
-static int	control_say(char *cmd, t_server *server)
-{
-	int		ret;
-	char	*tmp;
-	if ((tmp = strstr(cmd, "say")))
-	{
-		tmp += 3;
-		ret = say(tmp);
-		ft_putbuf("showing search results", server);
-	}
-	ret = 0;
-	return (ret);
-}
-
 /*
 ** Run a specific command if it matches the words.
 */
@@ -192,8 +178,6 @@ void		run_commands(char *cmd, t_server *server)
 	if (control_sound(cmd, server) == ERROR)
 		ft_putbuf("something went wrong!", server);
 	if (control_screenshot(cmd, server) == ERROR)
-		ft_putbuf("something went wrong!", server);
-	if (control_say(cmd, server) == ERROR)
 		ft_putbuf("something went wrong!", server);
 	if (server->response_len != 0)
 		ft_putbuf("command not recognized", server);
