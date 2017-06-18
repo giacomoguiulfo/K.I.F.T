@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/12 00:57:43 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/18 04:58:21 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 05:02:16 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,13 @@ static int	check_port(int argc, char **argv)
 
 	if (argc < 2)
 	{
-		dprintf(STDERR_FILENO, "%s: Too few arguments", argv[0]);
+		dprintf(STDERR_FILENO, "%s: Too few arguments\n", argv[0]);
 		exit(EXIT_FAILURE);
 	}
 	tmp = atoi(argv[1]);
 	if (tmp < 1024 || tmp > 49151)
 	{
-		dprintf(STDERR_FILENO, "%s: Invalid port number", argv[0]);
+		dprintf(STDERR_FILENO, "%s: Invalid port number\n", argv[0]);
 		exit(EXIT_FAILURE);
 	}
 	return (tmp);
