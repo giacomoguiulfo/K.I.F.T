@@ -34,7 +34,6 @@ function startRecord() {
     })
     .on('close', () => {
         sendRecord();
-        getData();
     })
     .pipe(file);
 }

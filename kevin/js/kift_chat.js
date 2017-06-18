@@ -34,4 +34,5 @@ function parseChat(message) {
 
     putMessage("user", "images/avatar.png", userMessage);
     putMessage("kevin", "images/logo-icon.png", kevinMessage);
+
 }

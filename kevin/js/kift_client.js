@@ -15,7 +15,7 @@ var net = require('net');
 var globalStatus = true;
 
 // Define port number, ip address, and timeout.
-var PORT = 8080;
+var PORT = 8081;
 var HOST = '127.0.0.1';
 var TIMEOUT = 5000;
 
@@ -43,8 +43,13 @@ client.on('error', function(e) {
 });
 
 // Gets the data received from the server.
-function getData() {
+/*
     client.on('data', function(data) {
         parseChat(String(data).split(";"));
     });
-}
+*/
+
+client.on('data', function(data) {
+	parseChat(String(data).split(";"));
+	startRecord();
+});
