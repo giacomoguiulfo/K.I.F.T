@@ -78,30 +78,30 @@ h3 {
 	font-weight: normal;
 }
 
-.followe{
+.stats{
   background : #F0F2F1;
 	border-bottom: 1px solid #18191A;
 }
 
-.followe li{
+.stats li{
 	float: left;
   width: 201px;
 	box-sizing : border-box;
 	-moz-box-sizing : border-box;
 }
 
-.followe li:nth-child(1){
+.stats li:nth-child(1){
 	border-right: 1px solid #2D3234;
 }
 
-.followe a{
+.stats a{
 	display: block;
 	padding : 10px 0;
 	text-decoration: none;
 	color: #F5F5F5;
 }
 
-.followe span{
+.stats span{
 	padding : 5px;
 	display: block;
 	text-align: center;
@@ -324,7 +324,7 @@ input[type='radio']#one:checked ~ .all{
 	-moz-transition : all .5s ease-in-out;
 }
 
-.Description , .Link{
+.about-me , .command{
 	width:402px;
 	height:282px;
 	float:left;
@@ -333,7 +333,7 @@ input[type='radio']#one:checked ~ .all{
 	background : -moz-linear-gradient(rgb(242, 242, 243) 15%, rgb(240, 243, 241) 36%, rgb(241, 240, 241) 58%, rgb(236, 236, 236) 81%);
 }
 
-.Description  p {
+.about-me  p {
 	margin : 60px 0;
 	text-align: center;
 	line-height: 30px;
@@ -386,7 +386,7 @@ ul{
 	border-bottom: 0;
 }
 
-.Link a{
+.command a{
 	display: block;
 	padding: 8px 15px;
 	text-decoration: none;
@@ -397,7 +397,18 @@ ul{
 	opacity: 1;
 }
 
-.Link a:hover{
+.command a:hover{
 	text-shadow : 0 0 1px #4F5144;
 	opacity: .8;
+}
+
+.fa:before, .label {
+  vertical-align: middle;
+  line-height: 2.5;
+}
+
+.menu, h1 {
+	padding-top: 20px;
+	padding-left: 10px;
+	margin-bottom: -30px;
 }

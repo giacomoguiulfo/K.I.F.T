@@ -1,0 +1,17 @@
+{
+  "name": "kevin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "electron": "^1.6.11",
+    "flashheart": "^2.8.4",
+    "node-record-lpcm16": "^0.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
