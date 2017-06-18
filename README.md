@@ -26,6 +26,5 @@ npm install node-record-lpcm16
 - Clean directory
 - Man page
 - More commands
-- Add libft (delete submodule)
 - Fix JS
 - Verify norm and check everything is working
