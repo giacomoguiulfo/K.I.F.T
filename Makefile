@@ -6,7 +6,7 @@
 #    By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/16 07:02:04 by gguiulfo          #+#    #+#              #
-#    Updated: 2017/06/18 15:41:54 by gguiulfo         ###   ########.fr        #
+#    Updated: 2017/06/18 22:21:27 by gguiulfo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRCDIR		:= src
 LIBFT		:= libft/libft.a
 
 KIFTFILES	:= 	kift_continous kift_commands kift_server kift_log kift_utils \
-				kift_more_cmds
+				kift_more_cmds kift_extra_cmds
 
 SRC			:= $(addprefix $(SRCDIR)/, $(addsuffix .c, $(KIFTFILES)))
 

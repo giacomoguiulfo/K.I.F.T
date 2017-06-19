@@ -6,7 +6,7 @@
 /*   By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/11 02:21:22 by jaleman           #+#    #+#             */
-/*   Updated: 2017/06/18 17:52:38 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 20:29:47 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,12 @@ void		run_commands(char *cmd, t_server *server)
 	if (control_sound(&cmd[6], server) == ERROR)
 		ft_putbuf("something went wrong!", server);
 	if (control_screenshot(&cmd[6], server) == ERROR)
+		ft_putbuf("something went wrong!", server);
+	if (control_history(&cmd[6], server) == ERROR)
+		ft_putbuf("something went wrong!", server);
+	if (control_user(&cmd[6], server) == ERROR)
+		ft_putbuf("something went wrong!", server);
+	if (control_misc(&cmd[6], server) == ERROR)
 		ft_putbuf("something went wrong!", server);
 	ft_putbuf("command not recognized", server);
 }

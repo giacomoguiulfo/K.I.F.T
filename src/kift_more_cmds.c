@@ -6,7 +6,7 @@
 /*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/18 10:25:58 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/06/18 15:53:21 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 22:21:11 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,65 @@ int			control_finder(char *cmd, t_server *server)
 	}
 	else
 		control_finder_extension(&ret, cmd, server);
+	return (ret);
+}
+
+int			control_history(char *cmd, t_server *server)
+{
+	int		ret;
+
+	ret = 0;
+	if (!strcmp(cmd, "HISTORY"))
+	{
+		ret = system("open ./kevin_log.txt");
+		ft_putbuf("check out our history", server);
+	}
+	return (ret);
+}
+
+int			control_web(char *cmd, t_server *server)
+{
+	int		ret;
+
+	ret = 0;
+	if (!strcmp(cmd, "SEARCH THE WEB FOR TERM") ||
+		!strcmp(cmd, "SEARCH THE WEB FOR TERM IN PARENTHESES"))
+	{
+		ret = system("osascript -e 'tell application \"Safari\"' \
+			-e 'activate' \
+			-e 'do JavaScript \
+			\"window.open(\'https://www.google.com/#q=(term)\')\" \
+			in document 1' \
+			-e 'end tell'");
+		ft_putbuf("searching the web for term", server);
+	}
+	return (ret);
+}
+
+int			control_user(char *cmd, t_server *server)
+{
+	FILE	*fp;
+	char	path[1024];
+	int		ret;
+
+	ret = 0;
+	if (!strcmp(cmd, "WHO IS CONNECTED"))
+	{
+		fp = popen("/usr/bin/whoami", "r");
+		if (fp == NULL)
+			return (ERROR);
+		if (fgets(path, sizeof(path) - 1, fp) != NULL)
+			ft_putbuf(path, server);
+		pclose(fp);
+	}
+	else if (!strcmp(cmd, "WHERE"))
+	{
+		fp = popen("/bin/hostname", "r");
+		if (fp == NULL)
+			return (ERROR);
+		if (fgets(path, sizeof(path) - 1, fp) != NULL)
+			ft_putbuf(path, server);
+		pclose(fp);
+	}
 	return (ret);
 }

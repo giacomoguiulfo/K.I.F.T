@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 01:50:55 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/18 17:06:05 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 22:19:03 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,8 @@ void			ft_putbuf(const char *str, t_server *server);
 */
 
 int				control_finder(char *cmd, t_server *server);
+int				control_history(char *cmd, t_server *server);
+int				control_misc(char *cmd, t_server *server);
+int				control_user(char *cmd, t_server *server);
 
 #endif
