@@ -27,13 +27,15 @@ function sendRecord() {
 
 // Create an empty .wav file, starts recording audio.
 function startRecord() {
-    var file = fs.createWriteStream(filename, { encoding: 'binary' });
+    var file = fs.createWriteStream(filename, {
+        encoding: 'binary'
+    });
     record.start({
-        sampleRate: 16000,
-        verbose: true
-    })
-    .on('close', () => {
-        sendRecord();
-    })
-    .pipe(file);
+            sampleRate: 16000,
+            verbose: true
+        })
+        .on('close', () => {
+            sendRecord();
+        })
+        .pipe(file);
 }

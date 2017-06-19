@@ -25,7 +25,7 @@ var client = new net.Socket();
 // Logs the ip address and port number when there's a connection.
 client.connect(PORT, HOST, function() {
     console.log('Connected to: ' + HOST + ':' + PORT);
-	startRecord();
+    startRecord();
 });
 
 // If there's an error, retry connecting back to the server every few seconds,
@@ -44,6 +44,6 @@ client.on('error', function(e) {
 
 // Gets the data received from the server.
 client.on('data', function(data) {
-	parseChat(String(data).split(";"));
-	startRecord();
+    parseChat(String(data).split(";"));
+    startRecord();
 });
