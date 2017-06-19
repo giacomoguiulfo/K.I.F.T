@@ -1,7 +1,6 @@
 # BINARY
 kift
-out.wav
-test.wav
+*.wav
 client
 server
 
