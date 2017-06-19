@@ -6,7 +6,7 @@
 /*   By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/11 02:21:22 by jaleman           #+#    #+#             */
-/*   Updated: 2017/06/18 16:13:39 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 17:52:38 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ static int	control_display(char *cmd, t_server *server)
 		-e 'end tell'");
 		ft_putbuf("inverting colors", server);
 	}
-	else if (!strcmp(cmd, "LIGHTS ON") || !strcmp(cmd, "undim the screen"))
+	else if (!strcmp(cmd, "LIGHTS ON"))
 	{
 		ret = system("osascript -e 'tell application \"System Events\"' \
 		-e 'repeat 16 times' -e 'key code 144' -e 'end repeat' -e 'end tell'");
 		ft_putbuf("turning lights on", server);
 	}
-	else if (!strcmp(cmd, "LIGHTS OFF") || !strcmp(cmd, "dim the screen"))
+	else if (!strcmp(cmd, "LIGHTS OFF"))
 	{
 		ret = system("osascript -e 'tell application \"System Events\"' \
 		-e 'repeat 16 times' -e 'key code 145' -e 'end repeat' -e 'end tell'");
@@ -79,6 +79,13 @@ static int	control_sound(char *cmd, t_server *server)
 	{
 		ret = system("osascript -e 'set volume without output muted'");
 		ft_putbuf("turning volume off", server);
+	}
+	else if (!strcmp(cmd, "PLAY MUSIC"))
+	{
+		ret = system("osascript -e 'tell application \"Spotify\"' \
+		-e 'play track \"spotify:track:51pQ7vY7WXzxskwloaeqyj\"' \
+		-e 'end tell'");
+		ft_putbuf("playing the only music that exists", server);
 	}
 	return (ret);
 }
