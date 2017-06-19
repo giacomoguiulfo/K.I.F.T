@@ -6,7 +6,7 @@
 /*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/18 06:20:54 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/06/18 10:43:50 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 23:20:31 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ static void	recognize_from_file(const char *fname, t_server *server)
 int			init_pocketsphinx(t_server *server)
 {
 	g_config = cmd_ln_init(NULL, ps_args(), TRUE,
-			"-hmm", MODELDIR "/en-us/en-us",
+			"-hmm", "./acoustic_model/en-us-adapt",
 			"-lm", "./new_acoustic_model/new_acoustic_model.lm",
 			"-dict", "./new_acoustic_model/new_acoustic_model.dict",
 			NULL);
