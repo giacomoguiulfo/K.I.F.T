@@ -20,14 +20,21 @@ function putMessage(name, image, message) {
     targetElement.appendChild(newElement);
 }
 
-// ...
-function parseChat(message) {
-    var userMessage = message[0];
-    var kevinMessage = message[1];
+// Copies the functionality of the sleep() function
+function sleep(ms) {
+    var unixtime_ms = new Date().getTime();
+    while (new Date().getTime() < unixtime_ms + ms) {}
+}
 
-	if (kevinMessage == "name missing\n")
-		return ;
+// Parse the data into the chat.
+function parseChat(data) {
+    var userMessage = data[0];
+    var kevinMessage = data[1];
+
+    if (kevinMessage == "name missing\n")
+        return;
     putMessage("user", "images/avatar.png", userMessage);
     putMessage("kevin", "images/logo-icon.png", kevinMessage);
     responseVoice(kevinMessage);
+    sleep(2000);
 }
