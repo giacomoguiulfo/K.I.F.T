@@ -6,7 +6,7 @@
 /*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/18 20:27:08 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/06/18 22:26:23 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/18 22:37:08 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int				control_misc(char *cmd, t_server *server)
 	}
 	else if (!strcmp(cmd, "EMAIL"))
 	{
-		ret = system("python scripts/email.py");
+		ret = system("open -a Thunderbird.app");
 		ft_putbuf("sending email", server);
 	}
 	else if (!strncmp(cmd, "SET ALARM", 9))
