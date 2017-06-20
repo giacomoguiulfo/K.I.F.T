@@ -22,8 +22,7 @@ npm install node-record-lpcm16
 
 ## TODO
 
-- Clean directory
 - Man page
 - More commands
-- Fix JS
+- Fix server
 - Verify norm and check everything is working
