@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 01:50:55 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/18 22:19:03 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/19 21:11:22 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,23 @@ typedef struct	s_server
 	int			send_len;
 }				t_server;
 
+/*
+**
+*/
+
 int				init_pocketsphinx(t_server *server);
-void			kift_log(char *recognized, char *response);
 void			run_commands(char *cmd, t_server *server);
 int				check_wav_header(char *header, int expected_sr);
 void			ft_putbuf(const char *str, t_server *server);
 
 /*
-**	Kift Commands
+**	Kift Log
+*/
+
+void			kift_log(char *recognized, char *response);
+
+/*
+**	Kift Voice Command Functions
 */
 
 int				control_finder(char *cmd, t_server *server);

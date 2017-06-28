@@ -6,7 +6,7 @@
 /*   By: gguiulfo <gguiulfo@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/18 20:27:08 by gguiulfo          #+#    #+#             */
-/*   Updated: 2017/06/18 22:45:03 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/22 22:56:40 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int				control_misc(char *cmd, t_server *server)
 	else if (!strncmp(cmd, "SET ALARM", 9))
 		ft_putbuf("Alarm set. In five. Four. Three. Two. Juan. Beep Beep Bi",
 					server);
-	else if (!strncmp(cmd, "KIFT"))
+	else if (!strcmp(cmd, "KIFT"))
 		ft_putbuf("That is me!", server);
-	else if (!strncmp(cmd, "ALEXA"))
+	else if (!strcmp(cmd, "ALEXA"))
 		ft_putbuf("We used to date. I didn't ended up well", server);
 	return (ret);
 }
