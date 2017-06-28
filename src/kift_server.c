@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/12 00:57:43 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/26 22:08:02 by gguiulfo         ###   ########.fr       */
+/*   Updated: 2017/06/28 08:54:58 by gguiulfo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	client_out(t_server *server, int fd)
 	strncpy(&out[i], server->response, server->response_len);
 	i += server->response_len;
 	server->send_len = i;
-	close(fd);
+	// close(fd);
 	return (0);
 }
 
@@ -95,11 +95,7 @@ static int	begin(int filedes)
 		printf("ERROR!");
 		exit(EXIT_FAILURE);
 	}
-	if (flag == 0)
-	{
-		system("rm -f out.wav");
-		flag = 1;
-	}
+	system("rm -f out.wav");
 	return (0);
 }
 
