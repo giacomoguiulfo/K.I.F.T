@@ -1,28 +1,21 @@
 # KIFT
-The future of voice commands and super cool robot assistants
+VUI (Voice User Interface) based on CMUSphinx written in C and JavaScript.
 
 ## GETTING STARTED
+First, you will have to clone the project.
 ```
-git clone --recursive https://github.com/giacomoguiulfo/42-kift.git
-make
-./kift 8080
+git clone https://github.com/giacomoguiulfo/kift.git
 ```
-
-## DEPENDENCIES
+Then you will need to install all the dependencies. You can just do that by running the provided script like this:
 ```
-brew install sox
-brew install node
-brew tap watsonbox/cmu-sphinx
-brew install --HEAD watsonbox/cmu-sphinx/cmu-sphinxbase
-brew install --HEAD watsonbox/cmu-sphinx/cmu-pocketsphinx
-brew install --HEAD watsonbox/cmu-sphinx/cmu-sphinxtrain (only needed for training)
-npm install electron
-npm install node-record-lpcm16
+sh build.sh
 ```
-
-## TODO
-
-- Man page
-- More commands
-- Fix server
-- Verify norm and check everything is working
+Once that is done, the executable should be compiled too and you are ready run the program.
+Begin by starting up the server like this:
+```
+./kift
+```
+And then you will be able to launch the electron app
+```
+electron kift-client/main.js
+```
