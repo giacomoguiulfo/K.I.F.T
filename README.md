@@ -19,3 +19,9 @@ And then you will be able to launch the electron app
 ```
 electron kift-client/main.js
 ```
+
+## Authors
+* [José Ramón](https://github.com/jraleman)
+* [Jibran Kalia](https://github.com/JibranKalia)
+* [Giacomo Guiulfo](https://github.com/giacomoguiulfo)
+* [Abraham Nieto](https://github.com/hardtargetmullet)
