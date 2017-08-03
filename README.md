@@ -4,7 +4,8 @@ VUI (Voice User Interface) based on CMUSphinx written in C and JavaScript.
 ## Getting Started
 ```sh
 # Clone Repo
-git clone https://github.com/giacomoguiulfo/kift.git //Clone Repo
+git clone https://github.com/giacomoguiulfo/kift.git
+cd kift
 
 # Build Dependencies
 sh build.sh
@@ -13,7 +14,7 @@ sh build.sh
 ./kift
 
 # Launch App
-electron kift-client/main.js #launch app
+electron kift-client/main.js
 ```
 ## Built With
 
