@@ -1,4 +1,4 @@
-# KIFT
+# K.I.F.T
 VUI (Voice User Interface) based on CMUSphinx written in C and JavaScript.
 
 ## Getting Started
