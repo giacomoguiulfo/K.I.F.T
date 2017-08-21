@@ -3,6 +3,8 @@ kift
 *.wav
 client
 server
+pack
+node_modules
 
 # Prerequisites
 *.d
