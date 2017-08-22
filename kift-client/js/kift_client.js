@@ -17,7 +17,7 @@ var globalStatus = true;
 // Define port number, ip address, and timeout.
 var PORT = 8080;
 var HOST = '127.0.0.1';
-var TIMEOUT = 1000;
+var TIMEOUT = 10000;
 
 // Creates a new socket.
 var client = new net.Socket();

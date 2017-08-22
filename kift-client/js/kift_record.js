@@ -15,7 +15,7 @@ var fs = require('fs');
 var record = require('node-record-lpcm16');
 
 // Filename of the record
-var filename = "record.wav";
+let filename = "record.wav";
 
 // Saves and sends a .wav file to the server.
 function sendRecord() {
@@ -23,6 +23,7 @@ function sendRecord() {
     client.write(stats.toString());
     var readStream = fs.createReadStream(filename);
     readStream.pipe(client);
+	console.log("Files sent to server")
 }
 
 // Create an empty .wav file, starts recording audio.

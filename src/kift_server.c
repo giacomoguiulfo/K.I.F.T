@@ -69,6 +69,8 @@ static void	recieve_wav(t_server *server, char *inbuffer)
 	run_commands(server->recognized, server);
 	client_out(server, fd);
 	dprintf(g_new_socket, "Server send: %s\n", server->send);
+	DEBUG("New Socket = %d", g_new_socket);
+	DEBUG("Server Send: %s", server->send);
 	kift_log(server->recognized, server->response);
 }
 
@@ -78,6 +80,8 @@ static int	begin(int filedes)
 	int		nbytes;
 	char	buffer[BUFFER];
 	static int flag = 0;
+
+	DEBUG("Filedes = %d", filedes);
 
 	bzero(&server, sizeof(t_server));
 	bzero(buffer, BUFFER);
@@ -145,7 +149,7 @@ static int	check_port(int argc, char **argv)
 // 	return (0);
 // }
 
-#define PORT   8080 
+#define PORT   8080
 #define MAXMSG  512
 
 int	make_socket (uint16_t port)
@@ -230,7 +234,7 @@ int	main(void)
 				/* Connection request on original socket. */
 				int new;
 				size = sizeof (clientname);
-				new = accept(sock, (struct sockaddr *) &clientname, &size);
+				new = accept(sock, (struct sockaddr *) &clientname, (socklen_t *)&size);
 				if (new < 0)
 				{
 					perror("accept");
@@ -248,6 +252,7 @@ int	main(void)
 				// if (read_from_client (i) < 0)
 				// {
 					// bzero(&server, sizeof(t_server));
+					g_new_socket = i;
 					begin(i);
 					close(i);
 					FD_CLR(i, &active_fd_set);

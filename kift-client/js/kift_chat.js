@@ -31,6 +31,9 @@ function parseChat(data) {
     var userMessage = data[0];
     var kevinMessage = data[1];
 
+	console.log("User Message", userMessage);
+	console.log("Kevin Message", kevinMessage);
+
     if (kevinMessage == "name missing\n")
         return;
     putMessage("user", "images/avatar.png", userMessage);
