@@ -8,8 +8,10 @@
     "electron-packager": "^8.7.1"
   },
   "scripts": {
-    "build": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds"
+    "build": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
+   "start": "electron ."
   },
+
   "dependencies": {
     "electron": "^1.7.5",
     "electron-packager": "^8.7.2",
