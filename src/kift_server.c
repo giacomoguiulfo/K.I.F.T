@@ -145,7 +145,7 @@ static int	check_port(int argc, char **argv)
 // 	return (0);
 // }
 
-#define PORT    4242
+#define PORT   8080 
 #define MAXMSG  512
 
 int	make_socket (uint16_t port)
