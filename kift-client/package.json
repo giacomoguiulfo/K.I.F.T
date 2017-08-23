@@ -9,12 +9,12 @@
   },
   "scripts": {
     "build": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
-   "start": "electron ."
+    "start": "electron ."
   },
-
   "dependencies": {
     "electron": "^1.7.5",
     "electron-packager": "^8.7.2",
-    "node-record-lpcm16": "^0.3.0"
+    "node-record-lpcm16": "^0.3.0",
+    "pocketsphinx": "^5.0.7"
   }
 }
