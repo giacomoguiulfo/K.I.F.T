@@ -67,14 +67,26 @@
         </ul>
       </div>
 
+    <!-- Logo -->
+    <div class="image-logo">
+		<img src="images/logo.svg" alt="">
+	</div>
+
     <!-- Controls -->
-    <div class="image"></div>
     <input type="radio" id='one' name='control' checked/>
-    <label for="one"><i class='fa fa-comments-o' aria-hidden="true"></i></label>
+    <label for="one" style="color: #000;">
+		<i class='fa fa-comments-o' aria-hidden="true"></i>
+	</label>
+
     <input type="radio" id='two' name='control' />
-    <label for="two"><i class='fa fa-list-ul' aria-hidden="true"></i></label>
+    <label for="two" style="color: #000;">
+		<i class='fa fa-list-ul' aria-hidden="true"></i>
+	</label>
+
     <input type="radio" id='three' name='control' onclick="textVoice('aboutMe');"/>
-    <label for="three"><i class='fa fa-info' aria-hidden="true"></i></label>
+    <label for="three" style="color: #000;">
+		<i class='fa fa-info' aria-hidden="true"></i>
+	</label>
 
     <!-- Chat -->
     <div class="all">
@@ -86,7 +98,7 @@
           <div class="clean-div"></div>
         </div>
         <!-- Volume meter -->
-        <canvas id="meter" width="400" height="50"></canvas>
+        <canvas id="meter" width="500" height="50"></canvas>
       </div>
 
       <!-- List of commands -->
@@ -121,6 +133,8 @@
   <script type="text/javascript" src="js/volume-meter.js"></script>
   <script type="text/javascript" src="js/responsive-voice.js"></script>
   <script type="text/javascript" src="js/prefixfree.min.js"></script>
+
+
   <script type="text/javascript" src="js/kift_voice.js"></script>
   <script type="text/javascript" src="js/kift_chat.js"></script>
   <script type="text/javascript" src="js/kift_client.js"></script>

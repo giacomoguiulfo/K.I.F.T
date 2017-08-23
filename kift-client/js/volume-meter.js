@@ -86,15 +86,16 @@ function gotStream(stream) {
 
 function drawLoop( time ) {
     // clear the background
-    canvasContext.clearRect(0,0,WIDTH,HEIGHT);
+    canvasContext.clearRect(0, 0, WIDTH, HEIGHT);
 
+	console.log("val: " + meter);
     // check if we're currently clipping
     if (meter.checkClipping())
-        canvasContext.fillStyle = "red";
+        canvasContext.fillStyle = "#603C3D";
     else
-        canvasContext.fillStyle = "green";
+        canvasContext.fillStyle = "#3D603C";
     // draw a bar based on the current volume
-    canvasContext.fillRect(0, 0, meter.volume*WIDTH*1.4, HEIGHT);
+    canvasContext.fillRect(0, 0, meter.volume * WIDTH * 1.42, HEIGHT);
 
     // set up the next visual callback
     rafID = window.requestAnimationFrame( drawLoop );
@@ -155,7 +156,7 @@ function volumeAudioProcess( event ) {
     var x;
 
 	// Do a root-mean-square on the samples: sum up the squares...
-    for (var i=0; i<bufLength; i++) {
+    for (var i = 0; i < bufLength; i++) {
     	x = buf[i];
     	if (Math.abs(x)>=this.clipLevel) {
     		this.clipping = true;
