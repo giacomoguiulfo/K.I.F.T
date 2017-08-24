@@ -48,12 +48,65 @@ a:hover i[class^='icon-'] , a:hover i[class*='icon-']{
 .bg-image{
 	width: 402px;
 	height: 157px;
+
+/*
+	background-image: url('../images/mic2.jpg');
 	background-color: #222;
-	/*background-image: url('../images/mic2.jpg');*/
+*/
+
+
+
+
+
+/*
+background:
+linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
+linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,
+linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+background-color: #131313;
+background-size: 20px 20px;
+*/
+
+/*
+background:
+radial-gradient(black 15%, transparent 16%) 0 0,
+radial-gradient(black 15%, transparent 16%) 8px 8px,
+radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+background-color:#282828;
+background-size:16px 16px;
+*/
+
+
+
+background:
+radial-gradient(black 15%, transparent 86%) 0 0,
+radial-gradient(black 15%, transparent 86%) 8px 8px,
+radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+background-color:#222;
+background-size:12px 12px;
+
+
+/*
+background-color:black;
+background-image:
+radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px),
+radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 30px);
+background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+*/
+
 	position: relative;
 	border-bottom: 1px solid #38393A;
 }
 
+/*
 .bg-image:before{
 	content: '';
 	position: absolute;
@@ -65,8 +118,9 @@ a:hover i[class^='icon-'] , a:hover i[class*='icon-']{
 	-webkit-transform: rotate(-45deg);
 	-webkit-transform: rotate(-45deg);
 	top: -99px;
-
 }
+
+*/
 
 h3 {
 	display: block;
@@ -145,7 +199,7 @@ h3 {
 	top: 20px;
 	left: 20px;
 }
-
+/*
 .image-logo:after{
 	content: '';
 	position: absolute;
@@ -157,7 +211,7 @@ h3 {
 	-webkit-transform: rotate(42deg);
 	-moz-transform: rotate(42deg);
 }
-
+*/
 label{
 	display: inline-block;
 	width: 134px;
