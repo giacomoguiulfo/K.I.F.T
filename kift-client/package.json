@@ -1,20 +1,64 @@
 {
-  "name": "kevin",
-  "productName": "Kevin Kift",
-  "version": "0.1.0",
+  "name": "kevin-kift",
+  "productName": "Kevin",
+  "id": "jid1-1FERGV45e4f4f@kevin",
+  "build": {
+    "appId": "com.kevinkift.app",
+    "dmg": {
+      "icon": "build/icon.icns",
+      "background": "build/background.png",
+      "iconSize": 120,
+      "iconTextSize": 14,
+      "contents": [
+        {
+          "x": 478,
+          "y": 170,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 130,
+          "y": 170,
+          "type": "file"
+        }
+      ]
+    },
+    "mac": {
+      "category": "com.kevinkift.app"
+    }
+  },
+  "description": "A VUI (Voice User Interface) based on CMUSphinx written in C and JavaScript.",
+  "version": "1.0.0",
+  "homepage": "https://github.com/giacomoguiulfo/K.I.F.T",
+  "repository": "https://github.com/giacomoguiulfo/K.I.F.T",
+  "keywords": [
+    "VUI",
+    "CMUSphinx",
+    "JavaScript"
+  ],
+  "author": "Kevin K.I.F.T.",
+  "contributors": [
+    "Jibran Kalia (https://github.com/JibranKalia)",
+    "Jose Ramon Aleman (https://github.com/jraleman)"
+  ],
+  "license": "MIT",
   "main": "main.js",
-  "devDependencies": {
-    "electron": "^1.6.11",
-    "electron-packager": "^8.7.1"
+  "electronVersion": "1.7.5",
+  "dependencies": {
+    "devtron": "^1",
+    "electron-debug": "^1",
+    "electron-is-dev": "^0.1",
+    "electron-window-state": "^3",
+    "lodash": "^4"
   },
   "scripts": {
-    "build": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
-   "start": "electron ."
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
-
-  "dependencies": {
-    "electron": "^1.7.5",
-    "electron-packager": "^8.7.2",
-    "node-record-lpcm16": "^0.3.0"
+  "config": {
+    "url": "index.html",
+    "update": {
+      "url": false
+    }
   }
 }

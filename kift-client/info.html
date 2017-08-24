@@ -1,0 +1,152 @@
+<!--
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Application Info</title>
+    <link rel="stylesheet" href="assets/css/app.css">
+    <script>
+      const pjson = require('./package.json')
+      const electron = require('electron')
+      const ipc = electron.ipcRenderer
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1><script>document.write(electron.remote.app.getName())</script></h1>
+        <h2>Version <script>document.write(pjson.version)</script></h2>
+      </header>
+      <section class="main">
+        <ul>
+          <li><strong>Platform</strong>: <script>document.write(process.platform)</script></li>
+          <li><strong>Architecture</strong>: <script>document.write(process.arch)</script></li>
+          <li><strong>OS Release</strong>: <script>document.write(require('os').release())</script></li>
+          <li><strong>Main URL</strong>: <script>document.write(pjson.config.url || 'N.A.')</script></li>
+          <li><strong>Updates URL</strong>: <script>document.write((pjson.config.update && pjson.config.update.url) ? pjson.config.update.url : 'N.A.')</script></li>
+          <li><strong>Node</strong>: <script>document.write(process.versions.node)</script></li>
+          <li><strong>Chrome</strong>: <script>document.write(process.versions.chrome)</script></li>
+          <li><strong>Electron Runtime</strong>: <script>document.write(process.versions.electron)</script></li>
+          <li><strong>Process ID</strong>: <script>document.write(process.pid)</script></li>
+          <li><strong>Memory Usage</strong>: <script>document.write((Math.floor(process.memoryUsage().rss / (1024 * 1024))) + ' MB')</script></li>
+          <li><strong>Debug Mode</strong>: <script>document.write(pjson.config.debug || false)</script></li>
+        </ul>
+      </section>
+      <section class="printer-list">
+        <h2>Available Printers</h2>
+        <div id="printers">
+          <p>Searching for printers...</p>
+        </div>
+      </section>
+      <footer>
+        <p>
+          <small>(cc) 2016 SkelEktron</small>
+        </p>
+      </footer>
+      <p><a class="ui-text" id="close" href="javascript:window.close()">Close</a></p>
+    </div>
+  </body>
+  <script>
+    // You can also require other files to run in this process
+    require('./assets/js/ex-links.js')
+    // Uncomment below to enable printer management
+    // require('./assets/js/printers.js')
+  </script>
+</html>
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Info</title>
+
+<style media="screen">
+
+body {
+animation: fadein 2s;
+-moz-animation: fadein 2s; /* Firefox */
+-webkit-animation: fadein 2s; /* Safari and Chrome */
+-o-animation: fadein 2s; /* Opera */
+}
+@keyframes fadein {
+from {
+	opacity:0;
+}
+to {
+	opacity:1;
+}
+}
+@-moz-keyframes fadein { /* Firefox */
+from {
+	opacity:0;
+}
+to {
+	opacity:1;
+}
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+from {
+	opacity:0;
+}
+to {
+	opacity:1;
+}
+}
+@-o-keyframes fadein { /* Opera */
+from {
+	opacity:0;
+}
+to {
+	opacity: 1;
+}
+}
+
+</style>
+
+  </head>
+  <body>
+	  <h1 id="kift">K.I.F.T</h1>
+
+	  <p>VUI (Voice User Interface) based on CMUSphinx written in C and JavaScript.</p>
+
+	  <h2 id="gettingstarted">Getting Started</h2>
+
+	  <pre><code class="sh language-sh"># Clone Repo
+	  git clone https://github.com/giacomoguiulfo/kift.git
+	  cd kift
+
+	  # Build Dependencies
+	  sh build.sh
+
+	  # Run Server
+	  ./kift
+
+	  # Launch App
+	  electron kift-client/main.js
+	  </code></pre>
+
+	  <h2 id="builtwith">Built With</h2>
+
+	  <ul>
+	  <li><a href="https://github.com/electron/electron.git">Electron</a> - Front End</li>
+
+	  <li><a href="https://cmusphinx.github.io/wiki/download/">CMU SPHINX</a> - Recognizer Library</li>
+
+	  <li><a href="https://www.npmjs.com/package/node-record-lpcm16">node-record-lpcm16</a> - Recording Library</li>
+	  </ul>
+
+	  <h2 id="authors">Authors</h2>
+
+	  <ul>
+	  <li><a href="https://github.com/jraleman">José Ramón</a></li>
+
+	  <li><a href="https://github.com/JibranKalia">Jibran Kalia</a></li>
+
+	  <li><a href="https://github.com/giacomoguiulfo">Giacomo Guiulfo</a></li>
+
+	  <li><a href="https://github.com/hardtargetmullet">Abraham Nieto</a></li>
+	  </ul>
+  </body>
+</html>
