@@ -1,5 +1,7 @@
 # K.I.F.T
-VUI (Voice User Interface) based on CMUSphinx written in C and JavaScript.
+VUI (Voice User Interface) based on CMUSphinx written in C and JavaScript using Electron.
+
+<img width="590" alt="kift_view" src="https://user-images.githubusercontent.com/14208431/30776959-f32e6e90-a064-11e7-8cea-deb5ae96b686.png">
 
 ## Getting Started
 ```sh
